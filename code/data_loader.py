@@ -5,14 +5,14 @@ import gzip
 
 # Third-party libraries
 from numpy import zeros, uint8, float32
-def read_gz():
+def read_gz(images,labels):
 
 	"""Read input-vector (image) and target class (label, 0-9) and return
 	   it as list of tuples.
 	"""
 	# Open the images with gzip in read binary mode
-	images = gzip.open('../MNIST-data/train-images-idx3-ubyte.gz', 'rb')
-	labels = gzip.open('../MNIST-data/train-labels-idx1-ubyte.gz', 'rb')
+	# images = gzip.open('../MNIST-data/train-images-idx3-ubyte.gz', 'rb')
+	# labels = gzip.open('../MNIST-data/train-labels-idx1-ubyte.gz', 'rb')
 
 	# Read the binary data
 
@@ -40,8 +40,8 @@ def read_gz():
 	x = zeros((N, rows, cols), dtype=float32)  # Initialize numpy array #60000X28X28
 	y = zeros((N, 1), dtype=uint8)  # Initialize numpy array
 	for i in range(N):
-	    # if i % 1000 == 0:
-	        # print("i: %i" % i)
+	    if i % 1000 == 0:
+	        print("i: %i" % i)
 	    for row in range(rows):
 	        for col in range(cols):
 	            tmp_pixel = images.read(1)  # Just a single byte
