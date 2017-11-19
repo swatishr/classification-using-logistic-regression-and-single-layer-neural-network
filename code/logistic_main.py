@@ -58,7 +58,7 @@ try:
 	data = np.load("weights.npz")
 	W = data['W']
 except FileNotFoundError:
-	for epoch in range(30):
+	for epoch in range(501):
 		loss, grad = loss_grad_softmax_naive(W, trains_images, train_images_label, 0.5)
 		W -= 0.05 * grad # [K x D]
 		if(epoch % 10 == 0):
@@ -67,11 +67,11 @@ except FileNotFoundError:
 yDash = predict(W, trains_images)
 print(W)
 count = 0;
-# for i in range(55000):
-# 	print("predicted label : %d Actual Label %d" %(yDash[i], train_images_label[i]))
-# 	if(yDash[i] == train_images_label[i]):
-# 		count = count + 1
-# print("Accuracy is %f", count/55000)
+for i in range(55000):
+	print("predicted label : %d Actual Label %d" %(yDash[i], train_images_label[i]))
+	if(yDash[i] == train_images_label[i]):
+		count = count + 1
+print("Accuracy is %f", count/55000)
 # h = yDash(trains_images, W)
 # # for i in range(0,55000):#repeat 50000 times
 # # 	# print(trains_images[i,:].shape)
