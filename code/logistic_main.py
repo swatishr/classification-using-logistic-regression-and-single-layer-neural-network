@@ -5,6 +5,7 @@
 #########################################################################################
 import numpy as np
 from libs import *
+from sklearn import preprocessing
 
 try:
 	data = np.load("trainData.npz")
@@ -28,9 +29,12 @@ except FileNotFoundError:
 # print(train_images_label.shape)
 # print(test_images.shape)
 # print(test_images_label.shape)
-# view_image(trains_images[9999,:,:], train_images_label[9999])
+
+# view_image(normalized_X[9999,:,:], train_images_label[9999])
 trains_images = trains_images.reshape([60000,784])
 test_images = test_images.reshape([10000,784])
+trains_images = preprocessing.normalize(trains_images)
+test_images = preprocessing.normalize(test_images)
 # print(trains_images.shape)
 # print(train_images_label.shape)
 # print(test_images.shape)
@@ -59,7 +63,7 @@ try:
 	W = data['W']
 except FileNotFoundError:
 	for epoch in range(51):
-		loss, grad = loss_grad_softmax_vectorized(W, trains_images, train_images_label, 0.5)
+		loss, grad = loss_grad_softmax_naive(W, trains_images, train_images_label, 0.5)
 		W -= 0.05 * grad # [K x D]
 		if(epoch % 10 == 0):
 			print ('iteration %d/%d: loss %0.3f' % (epoch, 1000, loss[0]))
