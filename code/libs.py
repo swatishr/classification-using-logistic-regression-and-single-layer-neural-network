@@ -210,7 +210,10 @@ def loss_grad_softmax_naive(W, train_images, T, reg):
 		sum_exp_scores = np.sum(np.exp(scores))
 
 		corr_cls_exp_score = np.exp(scores[correct_class])
-		loss_x = -np.log(corr_cls_exp_score / sum_exp_scores)
+		if corr_cls_exp_score != 0:
+			loss_x = -np.log(corr_cls_exp_score / sum_exp_scores)
+		else:
+			loss_x = 0
 		loss += loss_x
 
 		# compute the gradient
