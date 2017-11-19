@@ -5,6 +5,7 @@
 #########################################################################################
 import numpy as np
 from libs import *
+from sklearn import preprocessing
 
 try:
 	data = np.load("trainData.npz")
@@ -28,9 +29,12 @@ except FileNotFoundError:
 # print(train_images_label.shape)
 # print(test_images.shape)
 # print(test_images_label.shape)
-# view_image(trains_images[9999,:,:], train_images_label[9999])
+view_image(trains_images[15,:,:], train_images_label[15])
 trains_images = trains_images.reshape([60000,784])
 test_images = test_images.reshape([10000,784])
+trains_images = preprocessing.normalize(trains_images)
+test_images = preprocessing.normalize(test_images)
+print(trains_images[15,:])
 # print(trains_images.shape)
 # print(train_images_label.shape)
 # print(test_images.shape)
@@ -54,16 +58,26 @@ train_images_label_target_mat[np.arange(55000), train_images_label.T] = 1#hot ve
 # print(train_images_label_target_mat.shape)#one hot vector
 # z = np.matmul(trains_images,theta)
 # print(loss_grad_softmax_naive(W, trains_images, train_images_label_target_mat, 0))
+h = yDash(trains_images, W)
 try:
-	data = np.load("weights.npz")
+	data = np.load("weights-alt.npz")
 	W = data['W']
 except FileNotFoundError:
-	for epoch in range(1000):
-		loss, grad = loss_grad_softmax_naive(W, trains_images, train_images_label_target_mat, 0)
-		W -= 0.05 * grad # [K x D]
+	for epoch in range(30):
+		W = sgd_solution(W, 0.5, trains_images, train_images_label_target_mat, h)
+		# W -= 0.05 * grad # [K x D]
 		if(epoch % 10 == 0):
-			print ('iteration %d/%d: loss %0.3f' % (epoch, 1000, loss[0]))
-	np.savez("weights.npz", W=W)
+			h = yDash(trains_images, W)
+			print ('iteration %d/%d: loss %0.3f' % (epoch, 30, cross_entropy(h, train_images_label_target_mat)))
+	np.savez("weights-alt.npz", W=W)
+yDash = predict(W, trains_images)
+print(W)
+count = 0;
+# for i in range(55000):
+# 	print("predicted label : %d Actual Label %d" %(yDash[i], train_images_label[i]))
+# 	if(yDash[i] == train_images_label[i]):
+# 		count = count + 1
+# print("Accuracy is %f", count/55000)
 # h = yDash(trains_images, W)
 # # for i in range(0,55000):#repeat 50000 times
 # # 	# print(trains_images[i,:].shape)
