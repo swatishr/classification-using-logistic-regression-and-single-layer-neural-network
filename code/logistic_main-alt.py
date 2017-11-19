@@ -58,16 +58,12 @@ try:
 	data = np.load("weights.npz")
 	W = data['W']
 except FileNotFoundError:
-	for epoch in range(11):
-		loss, grad = loss_grad_softmax_naive(W, trains_images, train_images_label, 0.5)
+	for epoch in range(1000):
+		loss, grad = loss_grad_softmax_naive(W, trains_images, train_images_label_target_mat, 0)
 		W -= 0.05 * grad # [K x D]
 		if(epoch % 10 == 0):
 			print ('iteration %d/%d: loss %0.3f' % (epoch, 1000, loss[0]))
 	np.savez("weights.npz", W=W)
-yDash = predict(W, trains_images)
-print(W)
-# for i in range(55000):
-# 	print("predicted label : %d Actual Label %d" %(yDash[i], train_images_label[i]))
 # h = yDash(trains_images, W)
 # # for i in range(0,55000):#repeat 50000 times
 # # 	# print(trains_images[i,:].shape)
