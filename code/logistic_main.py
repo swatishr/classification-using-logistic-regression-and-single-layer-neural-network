@@ -11,8 +11,8 @@ try:
 	trains_images = data['trains_images']
 	train_images_label = data['train_images_label']
 except FileNotFoundError:
-	images = gzip.open('MNIST-Data/train-images-idx3-ubyte.gz', 'rb')
-	labels = gzip.open('MNIST-Data/train-labels-idx1-ubyte.gz', 'rb')
+	images = gzip.open('MNIST_Data/train-images-idx3-ubyte.gz', 'rb')
+	labels = gzip.open('MNIST_Data/train-labels-idx1-ubyte.gz', 'rb')
 	(trains_images,train_images_label) =read_gz(images, labels);
 	np.savez("trainData.npz", trains_images=trains_images, train_images_label=train_images_label)
 try:
@@ -20,8 +20,8 @@ try:
 	test_images = data['test_images']
 	test_images_label = data['test_images_label']
 except FileNotFoundError:
-	images = gzip.open('MNIST-Data/t10k-images-idx3-ubyte.gz', 'rb')
-	labels = gzip.open('MNIST-Data/t10k-labels-idx1-ubyte.gz', 'rb')
+	images = gzip.open('MNIST_Data/t10k-images-idx3-ubyte.gz', 'rb')
+	labels = gzip.open('MNIST_Data/t10k-labels-idx1-ubyte.gz', 'rb')
 	(test_images,test_images_label) =read_gz(images,labels);
 	np.savez("testData.npz", test_images=test_images, test_images_label=test_images_label)
 # print(trains_images.shape)
