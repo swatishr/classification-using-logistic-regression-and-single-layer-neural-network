@@ -210,10 +210,7 @@ def loss_grad_softmax_naive(W, train_images, T, reg):
 		sum_exp_scores = np.sum(np.exp(scores))
 
 		corr_cls_exp_score = np.exp(scores[correct_class])
-		if corr_cls_exp_score != 0:
-			loss_x = -np.log(corr_cls_exp_score / sum_exp_scores)
-		else:
-			loss_x = 0
+		loss_x = -np.log(corr_cls_exp_score / sum_exp_scores)
 		loss += loss_x
 
 		# compute the gradient
@@ -241,12 +238,12 @@ def loss_grad_softmax_vectorized(W, X, y, reg):
 	# Shift scores so that the highest value is 0
 	scores -= np.max(scores)
 	scores_exp = np.exp(scores)
-	print(scores_exp.shape)
-	correct_scores_exp = scores_exp[y, range(num_train)] # [N, ]
+	# print(scores_exp.shape)
+	# correct_scores_exp = scores_exp[y, range(num_train)] # [N, ]
 	scores_exp_sum = np.sum(scores_exp, axis=0) # [N, ]
-	loss = -np.sum(np.log(correct_scores_exp / scores_exp_sum))
-	loss /= num_train
-	loss += 0.5 * reg * np.sum(W * W)
+	# loss = -np.sum(np.log(correct_scores_exp / scores_exp_sum))
+	# loss /= num_train
+	# loss += 0.5 * reg * np.sum(W * W)
 
 	scores_exp_normalized = scores_exp / scores_exp_sum
 	# deal with the correct class
@@ -255,7 +252,7 @@ def loss_grad_softmax_vectorized(W, X, y, reg):
 	grad /= num_train
 	grad += reg * W
 
-	return loss, grad
+	return 0, grad
 #prediction of the labels
 def predict(W, X):
         """
