@@ -30,6 +30,7 @@ accuracy = tf.reduce_mean(tf.cast(right_prediction, tf.float32))
 
 #Download, extract and read MNIST data in numpy array
 mnistData = input_data.read_data_sets('MNIST_Data', one_hot=True)
+print(mnistData.test.images[1, :])
 
 with tf.Session() as sess:
 	sess.run(tf.global_variables_initializer())

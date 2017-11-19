@@ -7,7 +7,7 @@ import tensorflow as tf
 
 def create_single_hidden_layer_nn():
 
-    n_hidden_1 = 1024 #number of neurons in hidden layer
+    n_hidden_1 = 784 #number of neurons in hidden layer
     n_input = 784
     n_classes = 10
 
