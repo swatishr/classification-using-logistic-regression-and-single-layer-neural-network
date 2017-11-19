@@ -65,35 +65,35 @@ def view_image(image, label=""):
 def yDash(trains_images, W):
 	[N, D] = trains_images.shape
 	h = zeros((N, 10), dtype=float32);
-	for i in range(0,N):#repeat 55000 times
-		scores = zeros(10)
-		for cls in range(10):
-			w = W[cls, :]
-			scores[cls] = w.dot(trains_images[i,:])
-		scores -= max(scores)
-		# correct_class = y[i]
-		sum_exp_scores = sum(exp(scores))
-
-		# corr_cls_exp_score = np.exp(scores[correct_class])
-		h[i,:] = exp(scores) / sum_exp_scores
-		# print(h[i,:].shape)
-		# print(h[i,:])
-		# break
-	return h
-
-
 	# for i in range(0,N):#repeat 55000 times
-	# 	# print(trains_images[i,:].shape)
-	# 	# a = matmul(W,trains_images[i,:])
-	# 	h[i,:] = W.dot(trains_images[i,:])
+	# 	scores = zeros(10)
+	# 	for cls in range(10):
+	# 		w = W[cls, :]
+	# 		scores[cls] = w.dot(trains_images[i,:])
+	# 	scores -= max(scores)
+	# 	# correct_class = y[i]
+	# 	sum_exp_scores = sum(exp(scores))
+
+	# 	# corr_cls_exp_score = np.exp(scores[correct_class])
+	# 	h[i,:] = exp(scores) / sum_exp_scores
 	# 	# print(h[i,:].shape)
 	# 	# print(h[i,:])
-	# 	# print(trains_images[i,:])
-	# 	h[i,:] =  softmax(h[i,:])
-	# 	# break
-	# 	# print(softmax(a.T))
 	# 	# break
 	# return h
+
+
+	for i in range(0,N):#repeat 55000 times
+		# print(trains_images[i,:].shape)
+		# a = matmul(W,trains_images[i,:])
+		h[i,:] = W.dot(trains_images[i,:])
+		# print(h[i,:].shape)
+		# print(h[i,:])
+		# print(trains_images[i,:])
+		h[i,:] =  softmax(h[i,:])
+		# break
+		# print(softmax(a.T))
+		# break
+	return h
 
 #hello softmax
 def softmax(x):
@@ -116,11 +116,11 @@ def cross_entropy(h, T):
 	Error =0;
 	tempError = 0;
 	for i in range(0,N):
-		# Error = Error + -1*T[i,:].dot(log(h[i,:].T))
+		Error = Error + -1*T[i,:].dot(log(h[i,:].T))
 		# for j in range(0,10):
 		# 	tempError +=-1*T[i,j]*log2(h[i,j])
 		# Error =Error+tempError
-		Error =  Error + -log(h[i,T[i,:].tolist().index(1)])
+		# Error =  Error + -log(h[i,T[i,:].tolist().index(1)])
 		# print(Error)
 		# print(h[i,T[i,:]])
 		# tempError = 0
@@ -130,49 +130,48 @@ def cross_entropy(h, T):
 	return Error/N
 
 #sgd back again, ahaa
-def sgd_solution(W, learning_rate, minibatch_size, num_epochs, L2_lambda, train_images, T, h):
+def sgd_solution(W, learning_rate, train_images, T, h):
 	[N, D]=train_images.shape
 	E=0
 	loss = 0
 	# weights = np.zeros([10,D])
 	weights = W
-	delta = zeros([10,D])
+	# delta = zeros([10,D])
+	delta = np.zeros_like(W)
 	tempWeight = 0
 	# h=h.T
 	# b = zeros((N,))
 	# print(T.shape)
-	print(h.shape)
-	print(T.shape)
-	for epoch in range(num_epochs):
-		print('epoch is ',epoch+1)
-		# print("weights ", weights)
-		# for i in range(0,N):
-		for j in range(0,10):
-			# print (j)
-			for i in range(0,N):
-				tempWeight += -(h[i,j]-T[i,j])*train_images[i,:]
-				# print((h[i,j]-T[i,j]))
-				# print(tempWeight)
-				# break
-
+	# for epoch in range(num_epochs):
+	# 	print('epoch is ',epoch+1)
+	# print("weights ", weights)
+	# for i in range(0,N):
+	for j in range(0,10):
+		# print (j)
+		for i in range(0,N):
+			tempWeight += -(h[i,j]-T[i,j])*train_images[i,:]
+			# print((h[i,j]-T[i,j]))
+			# print(tempWeight)
 			# break
-			delta[j,:] = tempWeight/N
-			tempWeight = 0
-			# weights[j,:] = weights[j,:] - learning_rate*delta[j,:]
-		weights = weights - learning_rate*delta
-		# print(weights)
 
-		# for i in range(int(N/minibatch_size)):
-		# 	lower_bound = i * minibatch_size
-		# 	upper_bound = min((i+1)*minibatch_size, N)
-		# 	Phi = trains_images[lower_bound : upper_bound, :]
-		# 	t = T[lower_bound : upper_bound, :]
-		# 	E_D = np.matmul((np.matmul(Phi, weights.T)-t).T, Phi)
-		# 	E = (E_D + L2_lambda * weights) / minibatch_size
-		# 	weights = weights - learning_rate * E
-		# print (weights.shape)
-		# print(np.linalg.norm(E))
-		# print (weights)
+		# break
+		delta[j,:] = tempWeight/N
+		tempWeight = 0
+		# weights[j,:] = weights[j,:] - learning_rate*delta[j,:]
+	weights = weights - learning_rate*delta
+	# print(weights)
+
+	# for i in range(int(N/minibatch_size)):
+	# 	lower_bound = i * minibatch_size
+	# 	upper_bound = min((i+1)*minibatch_size, N)
+	# 	Phi = trains_images[lower_bound : upper_bound, :]
+	# 	t = T[lower_bound : upper_bound, :]
+	# 	E_D = np.matmul((np.matmul(Phi, weights.T)-t).T, Phi)
+	# 	E = (E_D + L2_lambda * weights) / minibatch_size
+	# 	weights = weights - learning_rate * E
+	# print (weights.shape)
+	# print(np.linalg.norm(E))
+	# print (weights)
 	return weights
 
 def loss_grad_softmax_naive(W, train_images, T, reg):
