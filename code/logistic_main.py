@@ -66,8 +66,12 @@ except FileNotFoundError:
 	np.savez("weights.npz", W=W)
 yDash = predict(W, trains_images)
 print(W)
-# for i in range(55000):
-# 	print("predicted label : %d Actual Label %d" %(yDash[i], train_images_label[i]))
+count = 0;
+for i in range(55000):
+	print("predicted label : %d Actual Label %d" %(yDash[i], train_images_label[i]))
+	if(yDash[i] == train_images_label[i]):
+		count = count + 1
+print("Accuracy is %f", count/55000)
 # h = yDash(trains_images, W)
 # # for i in range(0,55000):#repeat 50000 times
 # # 	# print(trains_images[i,:].shape)
