@@ -143,3 +143,4 @@ for learningrate in np.arange(0.03,0.15,0.01):
 # print(h[1:10,:])
 # print(softmaxx([2, 3, 5, 6]))
 # cross_entropy(h,train_images_label_target_mat)
+

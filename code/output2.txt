@@ -1,0 +1,72 @@
+Current learning rate is 0.120000
+iteration 0/200: loss 2.303
+iteration 10/200: loss 0.609
+iteration 20/200: loss 0.487
+iteration 30/200: loss 0.436
+iteration 40/200: loss 0.407
+iteration 50/200: loss 0.387
+iteration 60/200: loss 0.373
+iteration 70/200: loss 0.362
+iteration 80/200: loss 0.353
+iteration 90/200: loss 0.346
+iteration 100/200: loss 0.340
+iteration 110/200: loss 0.335
+iteration 120/200: loss 0.330
+iteration 130/200: loss 0.326
+iteration 140/200: loss 0.323
+iteration 150/200: loss 0.320
+iteration 160/200: loss 0.317
+iteration 170/200: loss 0.314
+iteration 180/200: loss 0.312
+iteration 190/200: loss 0.310
+training set Accuracy is 0.913745
+validation set Accuracy is 0.931000
+Test set Accuracy is 0.914000
+Current learning rate is 0.130000
+iteration 0/200: loss 2.303
+iteration 10/200: loss 0.591
+iteration 20/200: loss 0.475
+iteration 30/200: loss 0.427
+iteration 40/200: loss 0.399
+iteration 50/200: loss 0.381
+iteration 60/200: loss 0.367
+iteration 70/200: loss 0.357
+iteration 80/200: loss 0.348
+iteration 90/200: loss 0.341
+iteration 100/200: loss 0.336
+iteration 110/200: loss 0.331
+iteration 120/200: loss 0.326
+iteration 130/200: loss 0.323
+iteration 140/200: loss 0.319
+iteration 150/200: loss 0.316
+iteration 160/200: loss 0.313
+iteration 170/200: loss 0.311
+iteration 180/200: loss 0.309
+iteration 190/200: loss 0.306
+training set Accuracy is 0.914800
+validation set Accuracy is 0.932200
+Test set Accuracy is 0.915000
+Current learning rate is 0.140000
+iteration 0/200: loss 2.303
+iteration 10/200: loss 0.575
+iteration 20/200: loss 0.465
+iteration 30/200: loss 0.419
+iteration 40/200: loss 0.393
+iteration 50/200: loss 0.375
+iteration 60/200: loss 0.362
+iteration 70/200: loss 0.352
+iteration 80/200: loss 0.344
+iteration 90/200: loss 0.337
+iteration 100/200: loss 0.332
+iteration 110/200: loss 0.327
+iteration 120/200: loss 0.323
+iteration 130/200: loss 0.319
+iteration 140/200: loss 0.316
+iteration 150/200: loss 0.313
+iteration 160/200: loss 0.310
+iteration 170/200: loss 0.308
+iteration 180/200: loss 0.306
+iteration 190/200: loss 0.304
+training set Accuracy is 0.915455
+validation set Accuracy is 0.933000
+Test set Accuracy is 0.915600
