@@ -65,7 +65,7 @@ train_images_label_target_mat[np.arange(55000), train_images_label.T] = 1#hot ve
 # yDash = predict(W, trains_images)
 # print(yDash)
 try:
-	data = np.load("weights.npz902_0")
+	data = np.load("weights.npz")
 	W = data['W']
 except FileNotFoundError:
 	# for epoch in range(10):
