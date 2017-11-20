@@ -33,8 +33,12 @@ except FileNotFoundError:
 # view_image(normalized_X[9999,:,:], train_images_label[9999])
 trains_images = trains_images.reshape([60000,784])
 test_images = test_images.reshape([10000,784])
-trains_images = preprocessing.normalize(trains_images)
-test_images = preprocessing.normalize(test_images)
+#trains_images = preprocessing.normalize(trains_images)
+#test_images = preprocessing.normalize(test_images)
+#trains_images = (trains_images - trains_images.min())/(trains_images.max()-trains_images.min())
+#test_images = (test_images - test_images.min())/(test_images.max()-test_images.min())
+trains_images = preprocessing.scale(trains_images)
+test_images = preprocessing.scale(test_images)
 # print(trains_images.shape)
 # print(train_images_label.shape)
 # print(test_images.shape)
@@ -63,8 +67,8 @@ try:
 	W = data['W']
 except FileNotFoundError:
 	for epoch in range(200):
-		loss, grad = loss_grad_softmax_naive(W, trains_images, train_images_label, 10)
-		W -= 0.001 * grad # [K x D]
+		loss, grad = loss_grad_softmax_naive(W, trains_images, train_images_label, 0)
+		W -= 0.01 * grad # [K x D]
 		if(epoch % 10 == 0):
 			print ('iteration %d/%d: loss %0.3f' % (epoch, 1000, loss))
 	np.savez("weights.npz", W=W)
