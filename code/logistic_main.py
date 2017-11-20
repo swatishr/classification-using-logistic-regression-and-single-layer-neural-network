@@ -81,7 +81,6 @@ for learningrate in np.arange(0.04,0.11,0.01):
 			# 	print ('iteration %d/%d: loss %0.3f' % (epoch, 1000, loss))
 		filename = 'weights.npz'+str(learningrate)
 		np.savez(filename, W=W)
-
 	yDashTrain = predict(W, trains_images)
 	# print(W)
 	count = 0;
