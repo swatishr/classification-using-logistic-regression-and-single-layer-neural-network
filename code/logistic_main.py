@@ -64,40 +64,42 @@ train_images_label_target_mat[np.arange(55000), train_images_label.T] = 1#hot ve
 # print(loss_grad_softmax_naive(W, trains_images, train_images_label_target_mat, 0))
 # yDash = predict(W, trains_images)
 # print(yDash)
-try:
-	data = np.load("weights.npz902_0")
-	W = data['W']
-except FileNotFoundError:
-	# for epoch in range(10):
-		# loss = cross_entropy2(W,trains_images, train_images_label_target_mat, 0)
-	W = sgd2(W, trains_images, train_images_label_target_mat, 0, 200, 0.07)
-		# W -= 0.01 * grad # [K x D]
-		# if(epoch % 10 == 0):
-		# 	print ('iteration %d/%d: loss %0.3f' % (epoch, 1000, loss))
-	np.savez("weights.npz", W=W)
+for learningrate in np.arange(0.04, 0.07, 0.08, 0.09, 0.1, 0.11):
+	try:
+		data = np.load("weights.npz902_0dfghjkl")
+		W = data['W']
+	except FileNotFoundError:
+		# for epoch in range(10):
+			# loss = cross_entropy2(W,trains_images, train_images_label_target_mat, 0)
+		W = sgd2(W, trains_images, train_images_label_target_mat, 0, 200, learningrate)
+			# W -= 0.01 * grad # [K x D]
+			# if(epoch % 10 == 0):
+			# 	print ('iteration %d/%d: loss %0.3f' % (epoch, 1000, loss))
+		filename = 'weights.npz'+str(learningrate)
+		np.savez(filename, W=W)
 
-yDashTrain = predict(W, trains_images)
-# print(W)
-count = 0;
-for i in range(55000):
-	# print("predicted label : %d Actual Label %d" %(yDashTrain[i], train_images_label[i]))
-	if(yDashTrain[i] == train_images_label[i]):
-		count = count + 1
-print("training set Accuracy is %f" %(count/55000))
-yDashVal = predict(W, validation_images)
-count = 0
-for i in range(5000):
-	# print("predicted label : %d Actual Label %d" %(yDash[i], validation_labels[i]))
-	if(yDashVal[i] == validation_labels[i]):
-		count = count + 1
-print("validation set Accuracy is %f"%(count/5000))
-yDashTest = predict(W, test_images)
-count = 0
-for i in range(10000):
-	# print("predicted label : %d Actual Label %d" %(yDash[i], validation_labels[i]))
-	if(yDashTest[i] == test_images_label[i]):
-		count = count + 1
-print("Test set Accuracy is %f" %(count/10000))
+	yDashTrain = predict(W, trains_images)
+	# print(W)
+	count = 0;
+	for i in range(55000):
+		# print("predicted label : %d Actual Label %d" %(yDashTrain[i], train_images_label[i]))
+		if(yDashTrain[i] == train_images_label[i]):
+			count = count + 1
+	print("training set Accuracy is %f" %(count/55000))
+	yDashVal = predict(W, validation_images)
+	count = 0
+	for i in range(5000):
+		# print("predicted label : %d Actual Label %d" %(yDash[i], validation_labels[i]))
+		if(yDashVal[i] == validation_labels[i]):
+			count = count + 1
+	print("validation set Accuracy is %f"%(count/5000))
+	yDashTest = predict(W, test_images)
+	count = 0
+	for i in range(10000):
+		# print("predicted label : %d Actual Label %d" %(yDash[i], validation_labels[i]))
+		if(yDashTest[i] == test_images_label[i]):
+			count = count + 1
+	print("Test set Accuracy is %f" %(count/10000))
 # h = yDash(trains_images, W)
 # # for i in range(0,55000):#repeat 50000 times
 # # 	# print(trains_images[i,:].shape)
