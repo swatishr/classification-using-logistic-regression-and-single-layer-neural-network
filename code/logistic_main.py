@@ -70,7 +70,7 @@ try:
 except FileNotFoundError:
 	# for epoch in range(10):
 		# loss = cross_entropy2(W,trains_images, train_images_label_target_mat, 0)
-	W = sgd2(W, trains_images, train_images_label_target_mat, 0, 200)
+	W = sgd2(W, trains_images, train_images_label_target_mat, 0, 200, 0.07)
 		# W -= 0.01 * grad # [K x D]
 		# if(epoch % 10 == 0):
 		# 	print ('iteration %d/%d: loss %0.3f' % (epoch, 1000, loss))
