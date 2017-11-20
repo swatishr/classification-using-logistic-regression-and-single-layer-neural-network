@@ -48,5 +48,6 @@ accuracy = tf.reduce_mean(tf.cast(match_predictions, tf.float32))
 accuracy_mnist = accuracy.eval(feed_dict={x: mnistData.test.images, actual_y: mnistData.test.labels})
 print("The accuracy on MNIST test set: %.2f" %(accuracy_mnist*100))
 
-accuracy_usps = accuracy.eval(feed_dict={x: extract_usps_images(), actual_y: extract_usps_labels()})
+usps_test_images, usps_test_labels = extract_usps_data()
+accuracy_usps = accuracy.eval(feed_dict={x: usps_test_images, actual_y: usps_test_labels})
 print("The accuracy on USPS test set: %.2f" %(accuracy_usps*100))

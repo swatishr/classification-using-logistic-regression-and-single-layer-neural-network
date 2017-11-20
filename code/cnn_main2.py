@@ -103,5 +103,6 @@ with tf.Session() as sess:
 	print("MNIST test accuracy: %.2f" %(accuracy_mnist*100))
 
 	#Run on USPS test data
-	accuracy_usps = accuracy.eval(feed_dict={x: extract_usps_images(), actual_y: extract_usps_labels(), no_drop_prob: 1.0})
+	usps_test_images, usps_test_labels = extract_usps_data()
+	accuracy_usps = accuracy.eval(feed_dict={x: usps_test_images, actual_y: usps_test_labels, no_drop_prob: 1.0})
 	print("The accuracy on USPS test set: %.2f" %(accuracy_usps*100))

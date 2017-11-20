@@ -1,0 +1,192 @@
+Current learning rate is 0.040000
+iteration 0/200: loss 2.303
+iteration 10/200: loss 0.971
+iteration 20/200: loss 0.726
+iteration 30/200: loss 0.620
+iteration 40/200: loss 0.559
+iteration 50/200: loss 0.519
+iteration 60/200: loss 0.491
+iteration 70/200: loss 0.469
+iteration 80/200: loss 0.452
+iteration 90/200: loss 0.438
+iteration 100/200: loss 0.426
+iteration 110/200: loss 0.417
+iteration 120/200: loss 0.408
+iteration 130/200: loss 0.401
+iteration 140/200: loss 0.394
+iteration 150/200: loss 0.388
+iteration 160/200: loss 0.383
+iteration 170/200: loss 0.378
+iteration 180/200: loss 0.374
+iteration 190/200: loss 0.370
+training set Accuracy is 0.899382
+validation set Accuracy is 0.923200
+Test set Accuracy is 0.903900
+Current learning rate is 0.050000
+iteration 0/200: loss 2.303
+iteration 10/200: loss 0.879
+iteration 20/200: loss 0.662
+iteration 30/200: loss 0.571
+iteration 40/200: loss 0.519
+iteration 50/200: loss 0.484
+iteration 60/200: loss 0.460
+iteration 70/200: loss 0.441
+iteration 80/200: loss 0.426
+iteration 90/200: loss 0.414
+iteration 100/200: loss 0.404
+iteration 110/200: loss 0.395
+iteration 120/200: loss 0.388
+iteration 130/200: loss 0.381
+iteration 140/200: loss 0.376
+iteration 150/200: loss 0.371
+iteration 160/200: loss 0.366
+iteration 170/200: loss 0.362
+iteration 180/200: loss 0.358
+iteration 190/200: loss 0.354
+training set Accuracy is 0.902000
+validation set Accuracy is 0.925800
+Test set Accuracy is 0.905900
+Current learning rate is 0.060000
+iteration 0/200: loss 2.303
+iteration 10/200: loss 0.811
+iteration 20/200: loss 0.617
+iteration 30/200: loss 0.536
+iteration 40/200: loss 0.490
+iteration 50/200: loss 0.459
+iteration 60/200: loss 0.437
+iteration 70/200: loss 0.421
+iteration 80/200: loss 0.408
+iteration 90/200: loss 0.397
+iteration 100/200: loss 0.388
+iteration 110/200: loss 0.380
+iteration 120/200: loss 0.374
+iteration 130/200: loss 0.368
+iteration 140/200: loss 0.363
+iteration 150/200: loss 0.358
+iteration 160/200: loss 0.354
+iteration 170/200: loss 0.350
+iteration 180/200: loss 0.346
+iteration 190/200: loss 0.343
+training set Accuracy is 0.904873
+validation set Accuracy is 0.926800
+Test set Accuracy is 0.908200
+Current learning rate is 0.070000
+iteration 0/200: loss 2.303
+iteration 10/200: loss 0.759
+iteration 20/200: loss 0.583
+iteration 30/200: loss 0.509
+iteration 40/200: loss 0.468
+iteration 50/200: loss 0.440
+iteration 60/200: loss 0.421
+iteration 70/200: loss 0.406
+iteration 80/200: loss 0.394
+iteration 90/200: loss 0.384
+iteration 100/200: loss 0.376
+iteration 110/200: loss 0.369
+iteration 120/200: loss 0.362
+iteration 130/200: loss 0.357
+iteration 140/200: loss 0.352
+iteration 150/200: loss 0.348
+iteration 160/200: loss 0.344
+iteration 170/200: loss 0.341
+iteration 180/200: loss 0.338
+iteration 190/200: loss 0.335
+training set Accuracy is 0.907055
+validation set Accuracy is 0.927000
+Test set Accuracy is 0.908800
+Current learning rate is 0.080000
+iteration 0/200: loss 2.303
+iteration 10/200: loss 0.717
+iteration 20/200: loss 0.555
+iteration 30/200: loss 0.489
+iteration 40/200: loss 0.451
+iteration 50/200: loss 0.425
+iteration 60/200: loss 0.407
+iteration 70/200: loss 0.393
+iteration 80/200: loss 0.382
+iteration 90/200: loss 0.373
+iteration 100/200: loss 0.366
+iteration 110/200: loss 0.359
+iteration 120/200: loss 0.354
+iteration 130/200: loss 0.349
+iteration 140/200: loss 0.344
+iteration 150/200: loss 0.340
+iteration 160/200: loss 0.337
+iteration 170/200: loss 0.334
+iteration 180/200: loss 0.331
+iteration 190/200: loss 0.328
+training set Accuracy is 0.908800
+validation set Accuracy is 0.927800
+Test set Accuracy is 0.909800
+Current learning rate is 0.090000
+iteration 0/200: loss 2.303
+iteration 10/200: loss 0.683
+iteration 20/200: loss 0.533
+iteration 30/200: loss 0.472
+iteration 40/200: loss 0.437
+iteration 50/200: loss 0.413
+iteration 60/200: loss 0.396
+iteration 70/200: loss 0.384
+iteration 80/200: loss 0.373
+iteration 90/200: loss 0.365
+iteration 100/200: loss 0.358
+iteration 110/200: loss 0.352
+iteration 120/200: loss 0.346
+iteration 130/200: loss 0.342
+iteration 140/200: loss 0.338
+iteration 150/200: loss 0.334
+iteration 160/200: loss 0.331
+iteration 170/200: loss 0.327
+iteration 180/200: loss 0.325
+iteration 190/200: loss 0.322
+training set Accuracy is 0.910182
+validation set Accuracy is 0.928600
+Test set Accuracy is 0.911200
+Current learning rate is 0.100000
+iteration 0/200: loss 2.303
+iteration 10/200: loss 0.654
+iteration 20/200: loss 0.515
+iteration 30/200: loss 0.458
+iteration 40/200: loss 0.425
+iteration 50/200: loss 0.403
+iteration 60/200: loss 0.387
+iteration 70/200: loss 0.375
+iteration 80/200: loss 0.366
+iteration 90/200: loss 0.358
+iteration 100/200: loss 0.351
+iteration 110/200: loss 0.345
+iteration 120/200: loss 0.340
+iteration 130/200: loss 0.336
+iteration 140/200: loss 0.332
+iteration 150/200: loss 0.328
+iteration 160/200: loss 0.325
+iteration 170/200: loss 0.322
+iteration 180/200: loss 0.320
+iteration 190/200: loss 0.317
+training set Accuracy is 0.911545
+validation set Accuracy is 0.929000
+Test set Accuracy is 0.912200
+Current learning rate is 0.110000
+iteration 0/200: loss 2.303
+iteration 10/200: loss 0.630
+iteration 20/200: loss 0.500
+iteration 30/200: loss 0.446
+iteration 40/200: loss 0.415
+iteration 50/200: loss 0.395
+iteration 60/200: loss 0.380
+iteration 70/200: loss 0.368
+iteration 80/200: loss 0.359
+iteration 90/200: loss 0.351
+iteration 100/200: loss 0.345
+iteration 110/200: loss 0.340
+iteration 120/200: loss 0.335
+iteration 130/200: loss 0.331
+iteration 140/200: loss 0.327
+iteration 150/200: loss 0.324
+iteration 160/200: loss 0.321
+iteration 170/200: loss 0.318
+iteration 180/200: loss 0.316
+iteration 190/200: loss 0.313
+training set Accuracy is 0.912509
+validation set Accuracy is 0.929800
+Test set Accuracy is 0.913500
