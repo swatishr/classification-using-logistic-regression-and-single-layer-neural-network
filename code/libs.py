@@ -110,7 +110,7 @@ def sgd(W, train_images, T, reg):
 def sgd2(W, train_images, T, L2_lambda, epochNo):
 	N, D = train_images.shape
 	for epoch in range(epochNo):
-		loss = cross_entropy2(W,train_images, T, L2_lambda)
+		loss = cross_entropy(W,train_images, T, L2_lambda)
 		grad = np.zeros_like(W)
 		K = W.shape[0]#number of classes
 		for i in range(N):
