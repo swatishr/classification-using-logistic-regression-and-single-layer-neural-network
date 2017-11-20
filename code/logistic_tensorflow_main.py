@@ -6,6 +6,7 @@
 
 import tensorflow as tf
 from tensorflow.examples.tutorials.mnist import input_data
+from USPS_data_extraction import *
 
 #Download, extract and read MNIST data in numpy array
 mnistData = input_data.read_data_sets('MNIST_Data', one_hot=True)
@@ -36,7 +37,7 @@ train_step = tf.train.GradientDescentOptimizer(0.5).minimize(loss)
 #run training on train data of batches of 100
 for _ in range(10000):
 	batch = mnistData.train.next_batch(100)
-	#print(mnistData.train._index_in_epoch)
+	print(mnistData.train._index_in_epoch)
 	train_step.run(feed_dict={x: batch[0], actual_y: batch[1]})
 
 #Evaluate the model
@@ -44,6 +45,8 @@ match_predictions = tf.equal(tf.argmax(actual_y, 1), tf.argmax(predicted_y, 1))
 
 accuracy = tf.reduce_mean(tf.cast(match_predictions, tf.float32))
 
-ans = accuracy.eval(feed_dict={x: mnistData.test.images, actual_y: mnistData.test.labels})
+accuracy_mnist = accuracy.eval(feed_dict={x: mnistData.test.images, actual_y: mnistData.test.labels})
+print("The accuracy on MNIST test set: %.2f" %(accuracy_mnist*100))
 
-print("The accuracy on MNIST test set: %.2f" %(ans*100))
+accuracy_usps = accuracy.eval(feed_dict={x: extract_usps_images(), actual_y: extract_usps_labels()})
+print("The accuracy on USPS test set: %.2f" %(accuracy_usps*100))
