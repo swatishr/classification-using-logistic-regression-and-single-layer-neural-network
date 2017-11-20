@@ -65,6 +65,9 @@ train_images_label_target_mat[np.arange(55000), train_images_label.T] = 1#hot ve
 # yDash = predict(W, trains_images)
 # print(yDash)
 for learningrate in np.arange(0.04,0.11,0.01):
+	print('Current learning rate is %f'%learningrate)
+	W = np.ones((10, 785), dtype=float32)  # Initialize numpy array #784+1
+
 	try:
 		data = np.load("weights.npz902_0dfghjkl")
 		W = data['W']
