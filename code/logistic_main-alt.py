@@ -29,12 +29,12 @@ except FileNotFoundError:
 # print(train_images_label.shape)
 # print(test_images.shape)
 # print(test_images_label.shape)
-view_image(trains_images[15,:,:], train_images_label[15])
+# view_image(trains_images[15,:,:], train_images_label[15])
 trains_images = trains_images.reshape([60000,784])
 test_images = test_images.reshape([10000,784])
-trains_images = preprocessing.normalize(trains_images)
-test_images = preprocessing.normalize(test_images)
-print(trains_images[15,:])
+trains_images = preprocessing.scale(trains_images)
+test_images = preprocessing.scale(test_images)
+# print(trains_images[15,:])
 # print(trains_images.shape)
 # print(train_images_label.shape)
 # print(test_images.shape)
@@ -64,10 +64,10 @@ try:
 	W = data['W']
 except FileNotFoundError:
 	for epoch in range(30):
-		W = sgd_solution(W, 0.5, trains_images, train_images_label_target_mat, h)
+		W = sgd_solution(W, 0.05, trains_images, train_images_label_target_mat, h)
 		# W -= 0.05 * grad # [K x D]
+		h = yDash(trains_images, W)
 		if(epoch % 10 == 0):
-			h = yDash(trains_images, W)
 			print ('iteration %d/%d: loss %0.3f' % (epoch, 30, cross_entropy(h, train_images_label_target_mat)))
 	np.savez("weights-alt.npz", W=W)
 yDash = predict(W, trains_images)
