@@ -64,7 +64,7 @@ train_images_label_target_mat[np.arange(55000), train_images_label.T] = 1#hot ve
 # print(loss_grad_softmax_naive(W, trains_images, train_images_label_target_mat, 0))
 # yDash = predict(W, trains_images)
 # print(yDash)
-for learningrate in np.arange(0.04, 0.07, 0.08, 0.09, 0.1, 0.11):
+for learningrate in np.arange(0.04,0.11,0.01):
 	try:
 		data = np.load("weights.npz902_0dfghjkl")
 		W = data['W']
