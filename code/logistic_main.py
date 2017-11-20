@@ -97,7 +97,7 @@ for i in range(10000):
 	# print("predicted label : %d Actual Label %d" %(yDash[i], validation_labels[i]))
 	if(yDashTest[i] == test_images_label[i]):
 		count = count + 1
-print("validation set Accuracy is %f" %(count/10000))
+print("Test set Accuracy is %f" %(count/10000))
 # h = yDash(trains_images, W)
 # # for i in range(0,55000):#repeat 50000 times
 # # 	# print(trains_images[i,:].shape)
