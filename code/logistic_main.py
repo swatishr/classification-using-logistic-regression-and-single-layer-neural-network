@@ -72,7 +72,7 @@ except FileNotFoundError:
 		# W -= 0.01 * grad # [K x D]
 		# if(epoch % 10 == 0):
 		# 	print ('iteration %d/%d: loss %0.3f' % (epoch, 1000, loss))
-	np.savez("weights.npz", W=W)
+	np.savez("weights.npz902_0", W=W)
 
 yDashTrain = predict(W, trains_images)
 # print(W)
