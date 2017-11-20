@@ -68,7 +68,7 @@ try:
 except FileNotFoundError:
 	for epoch in range(200):
 		loss, grad = loss_grad_softmax_naive(W, trains_images, train_images_label, 0)
-		W -= 0.01 * grad # [K x D]
+		W -= 0.03 * grad # [K x D]
 		if(epoch % 10 == 0):
 			print ('iteration %d/%d: loss %0.3f' % (epoch, 1000, loss))
 	np.savez("weights.npz", W=W)
