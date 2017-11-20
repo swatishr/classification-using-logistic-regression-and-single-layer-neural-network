@@ -48,7 +48,6 @@ W = np.ones((10, 785), dtype=float32)  # Initialize numpy array #784+1
 # trains_images = np.insert(trains_images, 1, values=1, axis=1)#adding the extra column in feature matrix
 trains_images = np.insert(trains_images, 0, 1, axis=1)#adding the extra column in feature matrix, 785 features now
 validation_images = trains_images[55000:60000]
-validation_images = np.insert(validation_images, 0, 1, axis=1)#adding the extra column in feature matrix, 785 features now
 validation_labels = train_images_label[55000:60000,:]
 trains_images = trains_images[0:55000]
 train_images_label = train_images_label[0:55000,:]
