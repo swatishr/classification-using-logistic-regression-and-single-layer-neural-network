@@ -84,30 +84,8 @@ def softmax(x):
     e_x = exp(x - max(x))
     return e_x / e_x.sum()
 
-def sgd(W, train_images, T, reg):
-	Error = 0
-	num_train, dim = train_images.shape
-	grad = np.zeros_like(W)
-	num_classes = W.shape[0]
-	for i in range(num_train):
-		ydash = np.zeros(num_classes) # [K, 1] unnormalized score
-		ydash = W.dot(train_images[i,:])
-		y = T[i]
-		normalised_yDash = softmax(ydash)
-		E_D = cross_entropy(normalised_yDash, y)
-		# E_D = -np.log(corr_cls_exp_score / sum_exp_scores)
-		Error += E_D
-		for j in range(num_classes):
-		    grad[j, :] += normalised_yDash[j] * train_images[i,:]
-		grad[np.where( y==1), :] -= train_images[i,:] # deal with the correct class
 
-	Error /= num_train
-	Error += 0.5 * reg * np.sum(W * W) # add regularization
-	grad /= num_train
-	grad += reg * W
-	return Error, grad
-
-def sgd2(W, train_images, T, L2_lambda, epochNo, learning_rate):
+def sgd(W, train_images, T, L2_lambda, epochNo, learning_rate):
 	N, D = train_images.shape
 	for epoch in range(epochNo):
 		loss = cross_entropy(W,train_images, T, L2_lambda)
