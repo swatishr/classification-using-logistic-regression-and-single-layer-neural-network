@@ -48,9 +48,12 @@ W = np.ones((10, 785), dtype=float32)  # Initialize numpy array #784+1
 # trains_images = np.insert(trains_images, 1, values=1, axis=1)#adding the extra column in feature matrix
 trains_images = np.insert(trains_images, 0, 1, axis=1)#adding the extra column in feature matrix, 785 features now
 validation_images = trains_images[55000:60000]
+validation_images = np.insert(validation_images, 0, 1, axis=1)#adding the extra column in feature matrix, 785 features now
 validation_labels = train_images_label[55000:60000,:]
 trains_images = trains_images[0:55000]
 train_images_label = train_images_label[0:55000,:]
+test_images = np.insert(test_images, 0, 1, axis=1)#adding the extra column in feature matrix, 785 features now
+
 # print(trains_images.shape)
 # print(train_images_label.shape)
 # print(validation_images.shape)
@@ -63,7 +66,7 @@ train_images_label_target_mat[np.arange(55000), train_images_label.T] = 1#hot ve
 # yDash = predict(W, trains_images)
 # print(yDash)
 try:
-	data = np.load("weights.npz")
+	data = np.load("weights.npz902_0")
 	W = data['W']
 except FileNotFoundError:
 	# for epoch in range(10):
@@ -81,21 +84,21 @@ for i in range(55000):
 	# print("predicted label : %d Actual Label %d" %(yDashTrain[i], train_images_label[i]))
 	if(yDashTrain[i] == train_images_label[i]):
 		count = count + 1
-print("training set Accuracy is %f", count/55000)
+print("training set Accuracy is %f" %count/55000)
 yDashVal = predict(W, validation_images)
 count = 0
 for i in range(5000):
 	# print("predicted label : %d Actual Label %d" %(yDash[i], validation_labels[i]))
 	if(yDashVal[i] == validation_labels[i]):
 		count = count + 1
-print("validation set Accuracy is %f", count/5000)
+print("validation set Accuracy is %f"%count/5000)
 yDashTest = predict(W, test_images)
 count = 0
 for i in range(10000):
 	# print("predicted label : %d Actual Label %d" %(yDash[i], validation_labels[i]))
 	if(yDashTest[i] == test_images_label[i]):
 		count = count + 1
-print("validation set Accuracy is %f", count/10000)
+print("validation set Accuracy is %f" %count/10000)
 # h = yDash(trains_images, W)
 # # for i in range(0,55000):#repeat 50000 times
 # # 	# print(trains_images[i,:].shape)
