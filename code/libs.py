@@ -107,7 +107,7 @@ def sgd(W, train_images, T, reg):
 	grad += reg * W
 	return Error, grad
 
-def sgd2(W, train_images, T, L2_lambda, epochNo):
+def sgd2(W, train_images, T, L2_lambda, epochNo, learning_rate):
 	N, D = train_images.shape
 	for epoch in range(epochNo):
 		loss = cross_entropy(W,train_images, T, L2_lambda)
@@ -125,7 +125,7 @@ def sgd2(W, train_images, T, L2_lambda, epochNo):
 		grad += L2_lambda * W
 		if(epoch % 10 == 0):
 			print ('iteration %d/%d: loss %0.3f' % (epoch, epochNo, loss))
-		W -= 0.01 * grad # [K x D]
+		W -= learning_rate * grad # [K x D]
 	return W
 
 #cross entropy error function
