@@ -7,6 +7,7 @@
 from cnn_lib import *
 import tensorflow as tf
 from tensorflow.examples.tutorials.mnist import input_data
+from USPS_data_extraction import *
 
 #Download, extract and read MNIST data in numpy array
 mnistData = input_data.read_data_sets('MNIST_Data', one_hot=True)
@@ -82,21 +83,25 @@ accuracy = tf.reduce_mean(tf.cast(right_prediction, tf.float32))
 
 #to save the model
 
-
 #train and evaluate the model
 with tf.Session() as sess:
 	sess.run(tf.global_variables_initializer())
 	# saver = tf.train.Saver()
-	# for i in range(1000):
-	# 	batch = mnistData.train.next_batch(50)
-	# 	if i%100 == 0:
-	# 		train_accuracy = accuracy.eval(feed_dict={x: batch[0], actual_y: batch[1], no_drop_prob: 1.0})
-	# 		print("At step %d, training accuracy: %.2f" %(i, train_accuracy))
-	# 	train_step.run(feed_dict={x: batch[0], actual_y: batch[1], no_drop_prob: 0.5})
+	for i in range(20000):
+		batch = mnistData.train.next_batch(50)
+		if i%100 == 0:
+			train_accuracy = accuracy.eval(feed_dict={x: batch[0], actual_y: batch[1], no_drop_prob: 1.0})
+			print("At step %d, training accuracy: %.2f" %(i, train_accuracy))
+		train_step.run(feed_dict={x: batch[0], actual_y: batch[1], no_drop_prob: 0.5})
 	# saver.save(sess, "../tmp/model")
-	saver = tf.train.import_meta_graph('model.meta')
-	saver.restore(sess,tf.train.latest_checkpoint(''))
-	print(sess.run('bias_logit'))
-	test_accuracy = accuracy.eval(feed_dict={x: mnistData.test.images, actual_y: mnistData.test.labels, no_drop_prob: 1.0})
-	print("MNIST test accuracy: %.2f" %(test_accuracy))
+	# saver = tf.train.import_meta_graph('model.meta')
+	# saver.restore(sess,tf.train.latest_checkpoint(''))
+	# print(sess.run('bias_logit'))
 
+	#Run on MNIST test data
+	accuracy_mnist = accuracy.eval(feed_dict={x: mnistData.test.images, actual_y: mnistData.test.labels, no_drop_prob: 1.0})
+	print("MNIST test accuracy: %.2f" %(accuracy_mnist*100))
+
+	#Run on USPS test data
+	accuracy_usps = accuracy.eval(feed_dict={x: extract_usps_images(), actual_y: extract_usps_labels(), no_drop_prob: 1.0})
+	print("The accuracy on USPS test set: %.2f" %(accuracy_usps*100))
