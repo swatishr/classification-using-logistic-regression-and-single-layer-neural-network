@@ -5,6 +5,7 @@
 
 import tensorflow as tf
 
+#Creates a single hidden layer Neural Network model
 def create_single_hidden_layer_nn(number_hidden_units):
 
     n_hidden_1 = number_hidden_units #number of neurons in hidden layer
