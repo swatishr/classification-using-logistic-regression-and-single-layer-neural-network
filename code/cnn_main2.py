@@ -81,7 +81,6 @@ right_prediction = tf.equal(tf.argmax(logit_output, 1), tf.argmax(actual_y, 1))
 #get accuracy
 accuracy = tf.reduce_mean(tf.cast(right_prediction, tf.float32))
 
-#to save the model
 
 #train and evaluate the model
 with tf.Session() as sess:
@@ -93,10 +92,6 @@ with tf.Session() as sess:
 			train_accuracy = accuracy.eval(feed_dict={x: batch[0], actual_y: batch[1], no_drop_prob: 1.0})
 			print("At step %d, training accuracy: %.2f" %(i, train_accuracy))
 		train_step.run(feed_dict={x: batch[0], actual_y: batch[1], no_drop_prob: 0.5})
-	# saver.save(sess, "../tmp/model")
-	# saver = tf.train.import_meta_graph('model.meta')
-	# saver.restore(sess,tf.train.latest_checkpoint(''))
-	# print(sess.run('bias_logit'))
 
 	#Run on MNIST test data
 	accuracy_mnist = accuracy.eval(feed_dict={x: mnistData.test.images, actual_y: mnistData.test.labels, no_drop_prob: 1.0})
@@ -104,5 +99,9 @@ with tf.Session() as sess:
 
 	#Run on USPS test data
 	usps_test_images, usps_test_labels = extract_usps_data()
-	accuracy_usps = accuracy.eval(feed_dict={x: usps_test_images, actual_y: usps_test_labels, no_drop_prob: 1.0})
-	print("The accuracy on USPS test set: %.2f" %(accuracy_usps*100))
+	accuracy_usps1 = accuracy.eval(feed_dict={x: usps_test_images[0:10000,:], actual_y: usps_test_labels[0:10000,:], no_drop_prob: 1.0})
+	print("The accuracy on USPS test set1: %.2f" %(accuracy_usps1*100))
+	accuracy_usps2 = accuracy.eval(feed_dict={x: usps_test_images[10000:19999,:], actual_y: usps_test_labels[10000:19999,:], no_drop_prob: 1.0})
+	print("The accuracy on USPS test set2: %.2f" %(accuracy_usps2*100))
+
+	print("The accuracy on USPS test set: %.2f" %(((accuracy_usps1+accuracy_usps2)/2)*100))

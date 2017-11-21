@@ -13,12 +13,15 @@ from USPS_data_extraction import *
 learning_rate = 0.01
 training_epochs = 20000
 batch_size = 50
-number_hidden_units = 1024
+number_hidden_units = 784
 
 #Download, extract and read MNIST data in numpy array
 mnistData = input_data.read_data_sets('MNIST_Data', one_hot=True)
 
-# for number_hidden_units in range(784,1030, 40):
+#Extract USPS data
+usps_test_images, usps_test_labels = extract_usps_data()
+
+# for number_hidden_units in range(784,1030, 80):
 # 	for learning_rate in np.arange(0.01,0.06,0.01):
 #Construct NN model
 predicted_y, x, actual_y = create_single_hidden_layer_nn(number_hidden_units)
@@ -27,13 +30,14 @@ predicted_y, x, actual_y = create_single_hidden_layer_nn(number_hidden_units)
 loss = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits= predicted_y, labels = actual_y))
 
 #Optimizer for training
-train_step = tf.train.AdamOptimizer(learning_rate = learning_rate).minimize(loss)
+train_step = tf.train.AdamOptimizer(learning_rate=learning_rate).minimize(loss)
 
 #gives a boolean vector for whether the actual and predicted output match (1 if true, 0 if false)
 right_prediction = tf.equal(tf.argmax(predicted_y, 1), tf.argmax(actual_y, 1))
 
 #get accuracy
 accuracy = tf.reduce_mean(tf.cast(right_prediction, tf.float32))
+
 
 with tf.Session() as sess:
 	sess.run(tf.global_variables_initializer())
@@ -48,18 +52,18 @@ with tf.Session() as sess:
 
 	#Run on MNIST training data	
 	accuracy_mnist_train = accuracy.eval(feed_dict={x: mnistData.train.images, actual_y: mnistData.train.labels})
+	print("MNIST validation accuracy: %.2f" %(accuracy_mnist_train*100))
 
 	#Run on MNIST validation data	
 	accuracy_mnist_val = accuracy.eval(feed_dict={x: mnistData.validation.images, actual_y: mnistData.validation.labels})
-	# print("MNIST test accuracy: %.2f" %(accuracy_mnist_val*100))
+	print("MNIST validation accuracy: %.2f" %(accuracy_mnist_val*100))
 
 	#Run on MNIST test data	
 	accuracy_mnist_test = accuracy.eval(feed_dict={x: mnistData.test.images, actual_y: mnistData.test.labels})
-	# print("MNIST test accuracy: %.2f" %(accuracy_mnist_test*100))
+	print("MNIST test accuracy: %.2f" %(accuracy_mnist_test*100))
 
 	#Run on USPS test data
-	usps_test_images, usps_test_labels = extract_usps_data()
 	accuracy_usps = accuracy.eval(feed_dict={x: usps_test_images, actual_y: usps_test_labels})
-	# print("The accuracy on USPS test set: %.2f" %(accuracy_usps*100))
+	print("The accuracy on USPS test set: %.2f" %(accuracy_usps*100))
 
-	print("%d %.2f %.2f %.2f %.2f %.2f" %(number_hidden_units, learning_rate, accuracy_mnist_train*100, accuracy_mnist_val*100, accuracy_mnist_test*100, accuracy_usps*100))
+	#print("%d %.2f %.2f %.2f %.2f %.2f" %(number_hidden_units, learning_rate, accuracy_mnist_train*100, accuracy_mnist_val*100, accuracy_mnist_test*100, accuracy_usps*100))
