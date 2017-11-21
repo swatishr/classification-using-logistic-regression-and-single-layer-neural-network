@@ -120,5 +120,3 @@ for learningrate in np.arange(0.01,0.15,0.01):
 		if(yDashTest[i] == np.where( USPS_test_images_label[i]==1)):
 			count = count + 1
 	print("USPS set Accuracy is %f" %(count/19999))
-
-
