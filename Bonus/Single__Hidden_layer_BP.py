@@ -64,4 +64,4 @@ train_images_label = train_images_label[0:55000,:]
 test_images = np.insert(test_images, 0, 1, axis=1)#adding the extra column in feature matrix, 785 features now
 USPS_test_images = np.insert(USPS_test_images, 0, 1, axis=1)#adding the extra column in feature matrix, 785 features now
 
-model = build_model(3, 200, True, trains_images, train_images_label) 
+model = build_model(3, 200, True, trains_images, train_images_label, 0, 0.05) 

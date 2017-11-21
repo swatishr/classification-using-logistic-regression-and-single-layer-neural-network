@@ -183,7 +183,7 @@ def calculate_loss(model, X, y):
 # - nn_hdim: Number of nodes in the hidden layer 
 # - num_passes: Number of passes through the training data for gradient descent 
 # - print_loss: If True, print the loss every 1000 iterations 
-def build_model(nn_hdim, num_passes, print_loss, X, y): 
+def build_model(nn_hdim, num_passes, print_loss, X, y, reg_lambda, learning_rate): 
  
     # Initialize the parameters to random values. We need to learn these. 
     [num_examples, nn_input_dim] = X.shape
@@ -208,7 +208,12 @@ def build_model(nn_hdim, num_passes, print_loss, X, y):
  
         # Backpropagation 
         delta3 = probs 
-        delta3[range(num_examples), y] -= 1 
+        # print(probs.shape)
+        # print(y.shape)
+        # print(range(10))
+        # delta3[range(num_examples), y] -= 1 
+        for i in range(num_examples):
+        	delta3[i, y[i]] = delta3[i, y[i]] -1
         dW2 = (a1.T).dot(delta3) 
         db2 = np.sum(delta3, axis=0, keepdims=True) 
         delta2 = delta3.dot(W2.T) * (1 - np.power(a1, 2)) 
@@ -220,17 +225,17 @@ def build_model(nn_hdim, num_passes, print_loss, X, y):
         dW1 += reg_lambda * W1 
  
         # Gradient descent parameter update 
-        W1 += -epsilon * dW1 
-        b1 += -epsilon * db1 
-        W2 += -epsilon * dW2 
-        b2 += -epsilon * db2 
+        W1 += -learning_rate * dW1 
+        b1 += -learning_rate * db1 
+        W2 += -learning_rate * dW2 
+        b2 += -learning_rate * db2 
  
         # Assign new parameters to the model 
         model = { 'W1': W1, 'b1': b1, 'W2': W2, 'b2': b2} 
  
         # Optionally print the loss. 
         # This is expensive because it uses the whole dataset, so we don't want to do it too often. 
-        if print_loss and i % 1000 == 0: 
+        if print_loss and i % 10 == 0: 
           print("Loss after iteration %i: %f" %(i, calculate_loss(model))) 
  
     return model 
