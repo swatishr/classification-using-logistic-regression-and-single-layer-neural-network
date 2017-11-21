@@ -67,7 +67,13 @@ train_images_label_target_mat = np.zeros((55000, 10), dtype=uint8)
 train_images_label_target_mat[np.arange(55000), train_images_label.T] = 1#hot vector ofr the input label
 
 # model = build_model(3, 200, True, trains_images[0:200,:], train_images_label[0:200,:], 0, 0.05) 
-model = build_model(30, 200, trains_images, train_images_label, 0.05, 0.05, train_images_label_target_mat) 
+try:#training data
+	data = np.load("model.npz")
+	model = data['model']
+except FileNotFoundError:#read from mnist file if presaved data not found
+	model = build_model(50, 2500, trains_images, train_images_label, 0.05, 0.05, train_images_label_target_mat)
+	np.savez("model.npz", model=model)
+ 
 yDashTrain = predict(model, trains_images)
 count = 0;
 for i in range(55000):
