@@ -19,7 +19,7 @@ def make_square(im):
     new_im.paste(im, (a, b))
     return new_im
 
-def extract_usps_data():
+def extract_usps_data(scale):
 
 	try:
 		data = np.load("USPStestData.npz")
@@ -41,9 +41,12 @@ def extract_usps_data():
 					image = PIL.ImageOps.invert(image)
 					image = image.resize((28, 28), Image.BICUBIC)
 					img_array = np.asarray(image)
-					img_normalized = (img_array - img_array.min())/(img_array.max() - img_array.min())
-					#img_normalized = preprocessing.normalize(img_array)
-					usps_test_images.append(img_normalized.flatten())
+					if scale!=1:
+						img_normalized = (img_array - img_array.min())/(img_array.max() - img_array.min())
+						# img_normalized = preprocessing.normalize(img_array)
+						usps_test_images.append(img_normalized.flatten())
+					else:
+						usps_test_images.append(img_array.flatten())
 					usps_test_labels[j, i] = 1
 					# print(usps_test_labels[j,:])
 					j = j+1
@@ -85,5 +88,5 @@ def extract_usps_labels():
 	# 	j = j-1;
 	# return usps_test_labels
 
-usps_test_images, usps_test_labels = extract_usps_data()
+usps_test_images, usps_test_labels = extract_usps_data(0)
 print(usps_test_images.shape, usps_test_labels.shape)
