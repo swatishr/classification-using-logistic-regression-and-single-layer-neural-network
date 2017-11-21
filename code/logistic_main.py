@@ -7,7 +7,7 @@ import numpy as np
 from LRlibs import *
 from USPS_data_extraction import *
 from sklearn import preprocessing
-
+print('Running Logistic Regression...\n')
 try:#training data
 	data = np.load("trainData.npz")
 	trains_images = data['trains_images']
@@ -119,4 +119,8 @@ for learningrate in np.arange(0.01,0.15,0.01):
 		# print(np.where( USPS_test_images_label[i]==1))
 		if(yDashTest[i] == np.where( USPS_test_images_label[i]==1)):
 			count = count + 1
+
 	print("USPS set Accuracy is %f" %(count/19999))
+
+
+print('\n\n')
