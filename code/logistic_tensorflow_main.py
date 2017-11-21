@@ -15,7 +15,6 @@ mnistData = input_data.read_data_sets('MNIST_Data', one_hot=True)
 sess = tf.InteractiveSession()
 
 #Create nodes for imput images and target labels
-
 x = tf.placeholder(tf.float32, shape = [None, 784]) #784 for 28x28 image
 actual_y = tf.placeholder(tf.float32, shape = [None, 10]) #10 labels for 10 digits (0-9)
 
@@ -45,9 +44,11 @@ match_predictions = tf.equal(tf.argmax(actual_y, 1), tf.argmax(predicted_y, 1))
 
 accuracy = tf.reduce_mean(tf.cast(match_predictions, tf.float32))
 
+#Evaluate accuracy on MNIST test data
 accuracy_mnist = accuracy.eval(feed_dict={x: mnistData.test.images, actual_y: mnistData.test.labels})
 print("The accuracy on MNIST test set: %.2f" %(accuracy_mnist*100))
 
-usps_test_images, usps_test_labels = extract_usps_data()
+#Evaluate accuracy on USPS data
+usps_test_images, usps_test_labels = extract_usps_data(0)
 accuracy_usps = accuracy.eval(feed_dict={x: usps_test_images, actual_y: usps_test_labels})
 print("The accuracy on USPS test set: %.2f" %(accuracy_usps*100))
