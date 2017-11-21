@@ -8,7 +8,7 @@ from cnn_lib import *
 import tensorflow as tf
 from tensorflow.examples.tutorials.mnist import input_data
 from USPS_data_extraction import *
-
+print('Running CNN...\n\n\n')
 #Download, extract and read MNIST data in numpy array
 mnistData = input_data.read_data_sets('MNIST_Data', one_hot=True)
 

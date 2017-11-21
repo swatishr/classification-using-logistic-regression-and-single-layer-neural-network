@@ -8,7 +8,7 @@ import tensorflow as tf
 from single_layer_NN_lib import *
 from tensorflow.examples.tutorials.mnist import input_data
 from USPS_data_extraction import *
-
+print('Running Single Hidden Layer Neural Network...\n\n\n')
 #Initialize Parameters
 learning_rate = 0.01
 training_epochs = 20000
@@ -67,3 +67,4 @@ for number_hidden_units in range(784,1030, 80):
 			print("The accuracy on USPS test set: %.2f" %(accuracy_usps*100))
 
 			#print("%d %.2f %.2f %.2f %.2f %.2f" %(number_hidden_units, learning_rate, accuracy_mnist_train*100, accuracy_mnist_val*100, accuracy_mnist_test*100, accuracy_usps*100))
+print('\n\n')
