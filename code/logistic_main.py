@@ -1,18 +1,18 @@
 #########################################################################################
 #Description:
-# Read the traning data and perform the calculations
+# Read the training data and perform the calculations
 #
 #########################################################################################
 import numpy as np
-from libs import *
+from LRlibs import *
 from USPS_data_extraction import *
 from sklearn import preprocessing
 
-try:
+try:#training data
 	data = np.load("trainData.npz")
 	trains_images = data['trains_images']
 	train_images_label = data['train_images_label']
-except FileNotFoundError:
+except FileNotFoundError:#read from mnist file if presaved data not found
 	images = gzip.open('MNIST_Data/train-images-idx3-ubyte.gz', 'rb')
 	labels = gzip.open('MNIST_Data/train-labels-idx1-ubyte.gz', 'rb')
 	(trains_images,train_images_label) =read_gz(images, labels);
@@ -39,9 +39,9 @@ except FileNotFoundError:
 # print(USPS_test_images_label)
 
 # view_image(normalized_X[9999,:,:], train_images_label[9999])
-trains_images = trains_images.reshape([60000,784])
+trains_images = trains_images.reshape([60000,784])#flattening the input array
 test_images = test_images.reshape([10000,784])
-trains_images = preprocessing.scale(trains_images)
+trains_images = preprocessing.scale(trains_images)#standardising the image data set with zero mean and unit standard deviation
 test_images = preprocessing.scale(test_images)
 USPS_test_images = preprocessing.scale(USPS_test_images)
 # trains_images = (trains_images - trains_images.min())/(trains_images.max()-trains_images.min())
@@ -52,7 +52,7 @@ USPS_test_images = preprocessing.scale(USPS_test_images)
 # print(test_images_label.shape)
 
 ################################Preparing the weights and feature matrices##################################
-W = np.ones((10, 785), dtype=float32)  # Initialize numpy array #784+1
+W = np.ones((10, 785), dtype=float32)  # Initialize numpy array #784+1 for the weight with one, also added the bias column too
 # W = np.random.randn(10, 785) * 0.001
 # trains_images = np.insert(trains_images, 1, values=1, axis=1)#adding the extra column in feature matrix
 trains_images = np.insert(trains_images, 0, 1, axis=1)#adding the extra column in feature matrix, 785 features now
@@ -68,16 +68,12 @@ USPS_test_images = np.insert(USPS_test_images, 0, 1, axis=1)#adding the extra co
 # print(validation_images.shape)
 # print(validation_labels.shape)
 train_images_label_target_mat = np.zeros((55000, 10), dtype=uint8)
-train_images_label_target_mat[np.arange(55000), train_images_label.T] = 1#hot vector
-# print(train_images_label_target_mat.shape)#one hot vector
-# z = np.matmul(trains_images,theta)
-# print(loss_grad_softmax_naive(W, trains_images, train_images_label_target_mat, 0))
-# yDash = predict(W, trains_images)
-# print(yDash)
+train_images_label_target_mat[np.arange(55000), train_images_label.T] = 1#hot vector ofr the input label
 
-for learningrate in np.arange(0.03,0.15,0.01):
+##performing the model traning over differnet values of learning rate
+for learningrate in np.arange(0.01,0.15,0.01):
 	print('Current learning rate is %f'%learningrate)
-	W = np.ones((10, 785), dtype=float32)  # Initialize numpy array #784+1
+	W = np.ones((10, 785), dtype=float32)  # Initialize numpy array for weights #784+1
 	filename = 'weights.npz'+str(learningrate)
 
 	try:
@@ -91,7 +87,8 @@ for learningrate in np.arange(0.03,0.15,0.01):
 			# if(epoch % 10 == 0):
 			# 	print ('iteration %d/%d: loss %0.3f' % (epoch, 1000, loss))
 		# filename = 'weights.npz'+str(learningrate)
-		np.savez(filename, W=W)
+		np.savez(filename, W=W)#save the optimised weight for later direct loading
+	#performing the accuracy checking
 	yDashTrain = predict(W, trains_images)
 	# print(W)
 	count = 0;
@@ -110,37 +107,18 @@ for learningrate in np.arange(0.03,0.15,0.01):
 	yDashTest = predict(W, test_images)
 	count = 0
 	for i in range(10000):
-		# print("predicted label : %d Actual Label %d" %(yDash[i], validation_labels[i]))
+		# print("predicted label : %d Actual Label %d" %(yDash[i], test_images_label[i]))
 		if(yDashTest[i] == test_images_label[i]):
 			count = count + 1
 	print("Test set Accuracy is %f" %(count/10000))
 	yDashTest = predict(W, USPS_test_images)
 	count = 0
 	for i in range(19999):
-		# print("predicted label : %d Actual Label %d" %(yDash[i], validation_labels[i]))
+		# print("predicted label : %d Actual Label %d" %(yDash[i], USPS_test_images_label[i]))
 		# print(USPS_test_images_label[i])
 		# print(np.where( USPS_test_images_label[i]==1))
 		if(yDashTest[i] == np.where( USPS_test_images_label[i]==1)):
 			count = count + 1
 	print("USPS set Accuracy is %f" %(count/19999))
-# h = yDash(trains_images, W)
-# # for i in range(0,55000):#repeat 50000 times
-# # 	# print(trains_images[i,:].shape)
-# # 	a = np.matmul(W,trains_images[i,:])
-# # 	# print(a)
-# # 	# print(trains_images[i,:])
-# # 	h[i,:] =  softmax(a.T)
-# # 	# print(softmax(a.T))
-# # 	# break
-# print('done')
-# print(h[1,:])
-# print(cross_entropy(h, train_images_label_target_mat))
-# print('performing SGD')
-# W = sgd_solution(W, 0.5, 55000, 2, 0.1, trains_images, train_images_label_target_mat, h)
-# print(W.shape)
-# h = yDash(trains_images, W)
-# print(cross_entropy(h, train_images_label_target_mat))
-# print(h[1:10,:])
-# print(softmaxx([2, 3, 5, 6]))
-# cross_entropy(h,train_images_label_target_mat)
+
 

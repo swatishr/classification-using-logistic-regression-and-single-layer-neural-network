@@ -1,5 +1,4 @@
-#data-loader.py
-#loads the training , validation and test data from the MNIST data files
+#general library file, contains all the methods needed for performing the LR
 from struct import unpack
 import gzip
 from pylab import imshow, show, cm, matmul
@@ -8,6 +7,7 @@ from pylab import imshow, show, cm, matmul
 # Third-party libraries
 import numpy as np
 from numpy import zeros, uint8, float32, exp, max, log2, sum, log
+
 def read_gz(images,labels):
 
 	"""Read input-vector (image) and target class (label, 0-9) and return
@@ -55,13 +55,22 @@ def read_gz(images,labels):
 	    # print(y.shape)#60000X1
 	return (x, y)
 
+#################################
+#function for viewing the image and its label
+#function view_image(image, label="")
+#input : image array and its label
+#output : displays image and its label on the console
 def view_image(image, label=""):
 	"""View a single image."""
 	print("Label: %s" % label)
 	imshow(image, cmap=cm.gray)
 	show()
 
-#calculating the predicted values
+#################################
+#function for performing the W.dot(X) with softmax
+#function yDash(trains_images, W)
+#input : train image array and the weight matrix
+#output : returns the W.dot(X), that is the h matrix
 def yDash(trains_images, W):
 	[N, D] = trains_images.shape
 	h = zeros((N, 10), dtype=float32);
@@ -78,13 +87,21 @@ def yDash(trains_images, W):
 		# break
 	return h
 
-#hello softmax
+#################################
+#function for performing softmax
+#function softmax(X)
+#input : X is the result of W.dot(input_image)
+#output : returns softmax output
 def softmax(x):
     """Compute softmax values for each sets of scores in x."""
     e_x = exp(x - max(x))
     return e_x / e_x.sum()
 
-
+#################################
+#function for pperforming the gradient descent
+#function sgd(W, train_images, T, L2_lambda, epochNo, learning_rate)
+#input : W s weight matrix, train_image is the train data, T is the one hot vector of the train labels, L2_lambda is the regulariser, epchoNo is the iteration count for performing gradient descent, learning_rate is the step size
+#output : returns the optimsed weights
 def sgd(W, train_images, T, L2_lambda, epochNo, learning_rate):
 	N, D = train_images.shape
 	for epoch in range(epochNo):
@@ -92,21 +109,25 @@ def sgd(W, train_images, T, L2_lambda, epochNo, learning_rate):
 		grad = np.zeros_like(W)
 		K = W.shape[0]#number of classes
 		for i in range(N):
-			ydash = np.zeros(K) # [K, 1] unnormalized score
-			ydash = W.dot(train_images[i,:])
+			ydash = np.zeros(K) # [K, 1] 
+			ydash = W.dot(train_images[i,:]) #unnormalized predicted label
 			y = T[i]
 			normalised_yDash = softmax(ydash)
-			for j in range(K):
+			for j in range(K):#performing the gradient descent
 			    grad[j, :] += normalised_yDash[j] * train_images[i,:]
-			grad[np.where( y==1), :] -= train_images[i,:] # deal with the correct class
+			grad[np.where( y==1), :] -= train_images[i,:] # deal with the correct label in the one hot vector of y
 		grad /= N
 		grad += L2_lambda * W
 		if(epoch % 10 == 0):
 			print ('iteration %d/%d: loss %0.3f' % (epoch, epochNo, loss))
-		W -= learning_rate * grad # [K x D]
+		W -= learning_rate * grad # [K x D]#updating the weights
 	return W
 
-#cross entropy error function
+#################################
+#function for calculating the cross entropy error/loss
+#function cross_entropy(W, X, T, L2_lambda)
+#input : weights, input array for the image data, T is the one hot vector of the actual labels, L2_lambda is the regulariser
+#output : returns error value between actual and predicted label
 def cross_entropy(W, X, T, L2_lambda):
 	[N, D] = X.shape
 	# ydash = W.dot(X)
@@ -126,7 +147,11 @@ def cross_entropy(W, X, T, L2_lambda):
 	# print(Y_dash[1:10])
 	# print("min Y max Y = %0.4f  %0.4f"%(np.min(Y_dash), np.max(Y_dash)))
 	return Error
-#prediction of the labels
+#################################
+#function for calculating the cross entropy error/loss
+#function predict(W, X)
+#input : weight matrix, X is the input data set of the image
+#output : return the column with the maximum probabiliy value (softmax)
 def predict(W, X):
         X = X.T
         Y_dash = np.zeros(X.shape[1])
