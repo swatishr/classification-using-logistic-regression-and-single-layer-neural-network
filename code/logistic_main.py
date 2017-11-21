@@ -74,7 +74,7 @@ train_images_label_target_mat[np.arange(55000), train_images_label.T] = 1#hot ve
 for learningrate in np.arange(0.01,0.15,0.01):
 	print('Current learning rate is %f'%learningrate)
 	W = np.ones((10, 785), dtype=float32)  # Initialize numpy array for weights #784+1
-	filename = 'weights.npz'+str(learningrate)
+	filename = 'weight_collections/weights.npz'+str(learningrate)
 
 	try:
 		data = np.load(filename+'.npz')
