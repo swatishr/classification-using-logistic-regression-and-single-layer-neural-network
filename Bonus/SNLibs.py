@@ -37,22 +37,22 @@ def read_gz(images,labels):
 	# print(number_of_images);
 
 	if number_of_images != N:
-	    raise Exception('number of labels did not match the number of images')
+		raise Exception('number of labels did not match the number of images')
 
 	# Get the data
 	x = zeros((N, rows, cols), dtype=float32)  # Initialize numpy array #60000X28X28
 	y = zeros((N, 1), dtype=uint8)  # Initialize numpy array
 	for i in range(N):
-	    if i % 1000 == 0:
-	        print("i: %i" % i)
-	    for row in range(rows):
-	        for col in range(cols):
-	            tmp_pixel = images.read(1)  # Just a single byte
-	            tmp_pixel = unpack('>B', tmp_pixel)[0]
-	            x[i][row][col] = tmp_pixel
-	    tmp_label = labels.read(1)
-	    y[i] = unpack('>B', tmp_label)[0]
-	    # print(y.shape)#60000X1
+		if i % 1000 == 0:
+			print("i: %i" % i)
+		for row in range(rows):
+			for col in range(cols):
+				tmp_pixel = images.read(1)  # Just a single byte
+				tmp_pixel = unpack('>B', tmp_pixel)[0]
+				x[i][row][col] = tmp_pixel
+		tmp_label = labels.read(1)
+		y[i] = unpack('>B', tmp_label)[0]
+		# print(y.shape)#60000X1
 	return (x, y)
 
 #################################
@@ -66,26 +66,6 @@ def view_image(image, label=""):
 	imshow(image, cmap=cm.gray)
 	show()
 
-#################################
-#function for performing the W.dot(X) with softmax
-#function yDash(trains_images, W)
-#input : train image array and the weight matrix
-#output : returns the W.dot(X), that is the h matrix
-def yDash(trains_images, W):
-	[N, D] = trains_images.shape
-	h = zeros((N, 10), dtype=float32);
-	for i in range(0,N):#repeat 55000 times
-		# print(trains_images[i,:].shape)
-		# a = matmul(W,trains_images[i,:])
-		h[i,:] = W.dot(trains_images[i,:])
-		# print(h[i,:].shape)
-		# print(h[i,:])
-		# print(trains_images[i,:])
-		h[i,:] =  softmax(h[i,:])
-		# break
-		# print(softmax(a.T))
-		# break
-	return h
 
 #################################
 #function for performing softmax
@@ -93,149 +73,135 @@ def yDash(trains_images, W):
 #input : X is the result of W.dot(input_image)
 #output : returns softmax output
 def softmax(x):
-    """Compute softmax values for each sets of scores in x."""
-    e_x = exp(x - max(x))
-    return e_x / e_x.sum()
+	"""Compute softmax values for each sets of scores in x."""
+	e_x = exp(x - max(x))
+	return e_x / e_x.sum()
 
-#################################
-#function for pperforming the gradient descent
-#function sgd(W, train_images, T, L2_lambda, epochNo, learning_rate)
-#input : W s weight matrix, train_image is the train data, T is the one hot vector of the train labels, L2_lambda is the regulariser, epchoNo is the iteration count for performing gradient descent, learning_rate is the step size
-#output : returns the optimsed weights
-def sgd(W, train_images, T, L2_lambda, epochNo, learning_rate):
-	N, D = train_images.shape
-	for epoch in range(epochNo):
-		loss = cross_entropy(W,train_images, T, L2_lambda)
-		grad = np.zeros_like(W)
-		K = W.shape[0]#number of classes
-		for i in range(N):
-			ydash = np.zeros(K) # [K, 1] 
-			ydash = W.dot(train_images[i,:]) #unnormalized predicted label
-			y = T[i]
-			normalised_yDash = softmax(ydash)
-			for j in range(K):#performing the gradient descent
-			    grad[j, :] += normalised_yDash[j] * train_images[i,:]
-			grad[np.where( y==1), :] -= train_images[i,:] # deal with the correct label in the one hot vector of y
-		grad /= N
-		grad += L2_lambda * W
-		if(epoch % 10 == 0):
-			print ('iteration %d/%d: loss %0.3f' % (epoch, epochNo, loss))
-		W -= learning_rate * grad # [K x D]#updating the weights
-	return W
 
 #################################
 #function for calculating the cross entropy error/loss
 #function cross_entropy(W, X, T, L2_lambda)
 #input : weights, input array for the image data, T is the one hot vector of the actual labels, L2_lambda is the regulariser
 #output : returns error value between actual and predicted label
-def cross_entropy(W, X, T, L2_lambda):
-	[N, D] = X.shape
+def cross_entropy(model, X, T, L2_lambda):
+	# [N, D] = X.shape
 	# ydash = W.dot(X)
+	[num_examples, nn_input_dim] = X.shape
+	W1, b1, W2, b2 = model['W1'], model['b1'], model['W2'], model['b2'] 
+	probs = np.zeros((num_examples ,10),dtype=float32) # [K, 1] unnormalized score
+	[num_examples, nn_input_dim] = X.shape
+	# Forward propagation to calculate our predictions 
+	z1 = X.dot(W1) + b1 
+	a1 = np.tanh(z1) 
+	z2 = a1.dot(W2) + b2 
 	Error = 0
 	E_D = 0
-	for i in range(N):
+	for i in range(num_examples):
 		ydash = np.zeros(10) # [K, 1] unnormalized score
-		ydash = W.dot(X[i,:])
+		ydash = z2[i].T
 		y = T[i]
 		normalised_yDash = softmax(ydash)
 		E_D = -1*y.dot(log(normalised_yDash.T))
 		# E_D = -np.log(corr_cls_exp_score / sum_exp_scores)
 		Error += E_D
-	Error /= N
-	Error += 0.5 * L2_lambda * np.sum(W * W) # add regularization
+	Error /= num_examples
+	Error += 0.5 * L2_lambda *(np.sum(np.square(W1)) + np.sum(np.square(W2)))  # add regularization
 	# Y_dash = design_matrix.dot(W)
 	# print(Y_dash[1:10])
 	# print("min Y max Y = %0.4f  %0.4f"%(np.min(Y_dash), np.max(Y_dash)))
 	return Error
+
+# Helper function to evaluate the total loss on the dataset 
+def calculate_loss(model, X,y, reg_lambda): 
+	[num_examples, nn_input_dim] = X.shape
+	W1, b1, W2, b2 = model['W1'], model['b1'], model['W2'], model['b2'] 
+	# Forward propagation to calculate our predictions 
+	z1 = X.dot(W1) + b1 
+	a1 = np.tanh(z1) 
+	z2 = a1.dot(W2) + b2 
+	exp_scores = np.exp(z2) 
+	probs = exp_scores / np.sum(exp_scores, axis=1, keepdims=True) 
+	# Calculating the loss 
+	corect_logprobs = -np.log(probs[range(num_examples), y]) 
+	data_loss = np.sum(corect_logprobs) 
+	# Add regulatization term to loss (optional) 
+	data_loss += reg_lambda/2 * (np.sum(np.square(W1)) + np.sum(np.square(W2))) 
+	return 1./num_examples * data_loss 	
 #################################
 #function for calculating the cross entropy error/loss
 #function predict(model, x)
 #input : weight matrix of the model, x is the input data set of the image
 #output : return the column with the maximum probabiliy value (softmax)
 def predict(model, x): 
-    W1, b1, W2, b2 = model['W1'], model['b1'], model['W2'], model['b2'] 
-    # Forward propagation 
-    z1 = x.dot(W1) + b1 
-    a1 = np.tanh(z1) 
-    z2 = a1.dot(W2) + b2 
-    exp_scores = np.exp(z2) 
-    probs = exp_scores / np.sum(exp_scores, axis=1, keepdims=True) 
-    return np.argmax(probs, axis=1) 
-
-# Helper function to evaluate the total loss on the dataset 
-def calculate_loss(model, X, y): 
-    W1, b1, W2, b2 = model['W1'], model['b1'], model['W2'], model['b2'] 
-    # Forward propagation to calculate our predictions 
-    z1 = X.dot(W1) + b1 
-    a1 = np.tanh(z1) 
-    z2 = a1.dot(W2) + b2 
-    exp_scores = np.exp(z2) 
-    probs = exp_scores / np.sum(exp_scores, axis=1, keepdims=True) 
-    # Calculating the loss 
-    corect_logprobs = -np.log(probs[range(num_examples), y]) 
-    data_loss = np.sum(corect_logprobs) 
-    # Add regulatization term to loss (optional) 
-    data_loss += reg_lambda/2 * (np.sum(np.square(W1)) + np.sum(np.square(W2))) 
-    return 1./num_examples * data_loss 
+	W1, b1, W2, b2 = model['W1'], model['b1'], model['W2'], model['b2'] 
+	# Forward propagation 
+	z1 = x.dot(W1) + b1 
+	a1 = np.tanh(z1) 
+	z2 = a1.dot(W2) + b2 
+	exp_scores = np.exp(z2) 
+	probs = exp_scores / np.sum(exp_scores, axis=1, keepdims=True) 
+	return np.argmax(probs, axis=1) 
 
 # %% 16 
 # This function learns parameters for the neural network and returns the model. 
 # - nn_hdim: Number of nodes in the hidden layer 
 # - num_passes: Number of passes through the training data for gradient descent 
-# - print_loss: If True, print the loss every 1000 iterations 
-def build_model(nn_hdim, num_passes, print_loss, X, y, reg_lambda, learning_rate): 
+# - print_loss: If True, print the loss every 10 iterations 
+def build_model(nn_hdim, num_passes, X, y, reg_lambda, learning_rate, T): 
  
-    # Initialize the parameters to random values. We need to learn these. 
-    [num_examples, nn_input_dim] = X.shape
-    np.random.seed(0) 
-    W1 = np.random.randn(nn_input_dim, nn_hdim) / np.sqrt(nn_input_dim) 
-    b1 = np.zeros((1, nn_hdim)) 
-    W2 = np.random.randn(nn_hdim, 10) / np.sqrt(nn_hdim) 
-    b2 = np.zeros((1, 10)) 
+	# Initialize the parameters to random values. We need to learn these. 
+	[num_examples, nn_input_dim] = X.shape
+	np.random.seed(0) 
+	W1 = np.random.randn(nn_input_dim, nn_hdim) / np.sqrt(nn_input_dim) 
+	b1 = np.zeros((1, nn_hdim)) 
+	W2 = np.random.randn(nn_hdim, 10) / np.sqrt(nn_hdim) 
+	b2 = np.zeros((1, 10)) 
  
-    # This is what we return at the end 
-    model = {} 
+	# This is what we return at the end 
+	model = {} 
+	probs = np.zeros((num_examples ,10),dtype=float32) # [K, 1] unnormalized score
+	# Gradient descent. For each batch... 
+	for i in range(0, num_passes): 
  
-    # Gradient descent. For each batch... 
-    for i in range(0, num_passes): 
+		# Forward propagation 
+		z1 = X.dot(W1) + b1 
+		a1 = np.tanh(z1) 
+		z2 = a1.dot(W2) + b2 
+		# print(z2.shape)
+		# exp_scores = np.exp(z2) 
+		# probs = exp_scores / np.sum(exp_scores, axis=1, keepdims=True) 
+		for m in range(num_examples):
+			probs[m,:] = softmax(z2[m,:])
  
-        # Forward propagation 
-        z1 = X.dot(W1) + b1 
-        a1 = np.tanh(z1) 
-        z2 = a1.dot(W2) + b2 
-        exp_scores = np.exp(z2) 
-        probs = exp_scores / np.sum(exp_scores, axis=1, keepdims=True) 
+		# performing Backpropagation 
+		delta3 = probs
+		delta3 =probs - T 
+		# for i in range(num_examples):
+		# 	delta3[i, y[i]] = delta3[i, y[i]] -1
+		dW2 = (a1.T).dot(delta3) 
+		db2 = np.sum(delta3, axis=0, keepdims=True) 
+		delta2 = delta3.dot(W2.T) * (1 - np.power(a1, 2)) 
+		dW1 = np.dot(X.T, delta2) 
+		db1 = np.sum(delta2, axis=0) 
  
-        # Backpropagation 
-        delta3 = probs 
-        # print(probs.shape)
-        # print(y.shape)
-        # print(range(10))
-        # delta3[range(num_examples), y] -= 1 
-        for i in range(num_examples):
-        	delta3[i, y[i]] = delta3[i, y[i]] -1
-        dW2 = (a1.T).dot(delta3) 
-        db2 = np.sum(delta3, axis=0, keepdims=True) 
-        delta2 = delta3.dot(W2.T) * (1 - np.power(a1, 2)) 
-        dW1 = np.dot(X.T, delta2) 
-        db1 = np.sum(delta2, axis=0) 
+		# Add regularization terms (b1 and b2 don't have regularization terms) 
+		dW2 += reg_lambda * W2 
+		dW1 += reg_lambda * W1 
  
-        # Add regularization terms (b1 and b2 don't have regularization terms) 
-        dW2 += reg_lambda * W2 
-        dW1 += reg_lambda * W1 
+		# Gradient descent parameter update 
+		W1 += -learning_rate * dW1 
+		b1 += -learning_rate * db1 
+		W2 += -learning_rate * dW2 
+		b2 += -learning_rate * db2 
  
-        # Gradient descent parameter update 
-        W1 += -learning_rate * dW1 
-        b1 += -learning_rate * db1 
-        W2 += -learning_rate * dW2 
-        b2 += -learning_rate * db2 
+		# Assign new parameters to the model 
+		model = { 'W1': W1, 'b1': b1, 'W2': W2, 'b2': b2} 
  
-        # Assign new parameters to the model 
-        model = { 'W1': W1, 'b1': b1, 'W2': W2, 'b2': b2} 
+		# Optionally print the loss. 
+		# This is expensive because it uses the whole dataset, so we don't want to do it too often. 
+		loss = cross_entropy(model,X, T, reg_lambda)
+		if i % 10 == 0: 
+		  # print("Loss after iteration %i: %f" %(i, calculate_loss(model, X, y, reg_lambda))) 
+		  print("Loss after iteration %i: %f" %(i, loss)) 
  
-        # Optionally print the loss. 
-        # This is expensive because it uses the whole dataset, so we don't want to do it too often. 
-        if print_loss and i % 10 == 0: 
-          print("Loss after iteration %i: %f" %(i, calculate_loss(model))) 
- 
-    return model 
+	return model 
