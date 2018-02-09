@@ -7,20 +7,15 @@ hidden layer neural network, convolutional neural network and predicted the labe
 the digit images in both MNIST and USPS digit dataset.
 
 -Logistic Regression:
-○ We trained the model and tuned the hyperparameter i.e. learning rate, by
-using our own implementation of Logistic regression, we achieved an
-accuracy of 91.56% on MNIST test images and 45.15% on USPS test images
-at learning rate of 0.14 and lambda (regulariser) value of 0 .
-○ Using tensorflow, we have achieved an accuracy of 92.41% on MNIST test
-images and 48.32% on USPS test images
+We trained the model and tuned the hyperparameter i.e. learning rate, by using our own implementation of Logistic regression, we achieved an accuracy of 91.56% on MNIST test images and 45.15% on USPS test images at learning rate of 0.14 and lambda (regulariser) value of 0. Using tensorflow, we have achieved an accuracy of 92.41% on MNIST test images and 48.32% on USPS test images
 
 - Single hidden layer neural network:
-○ We trained the model and tuned the hyperparameter i.e. learning rate and
+We trained the model and tuned the hyperparameter i.e. learning rate and
 number of units in hidden layer, we achieved an accuracy of 97.76% on
 MNIST test images and 64.6% on USPS test images.
 
 - Convolutional Neural Network:
-○ After training the model using CNN, we achieved an accuracy of 99.18 % on
+After training the model using CNN, we achieved an accuracy of 99.18 % on
 MNIST test images and 75% on USPS test images.
 
 Project Structure:
