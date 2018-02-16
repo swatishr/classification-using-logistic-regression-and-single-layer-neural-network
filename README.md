@@ -52,8 +52,8 @@ and USPS data sets.
 * Then, ran the model on MNIST and USPS test data to get test accuracy. USPS test set was divided.
 * No need of tuning of hyperparameter in CNN.
 ### USPS data extraction:
-a. While extracting USPS image features, we have to make it resemble to the MNIST image features as close as possible so that our trained model can classify the images correctly.
-b. In order to do that, we followed below steps:
+* While extracting USPS image features, we have to make it resemble to the MNIST image features as close as possible so that our trained model can classify the images correctly.
+* In order to do that, we followed below steps:
   * Resized the image to square shape i.e. width = height = max(width, height) it was done in such a way that the aspect ratio of the digits was not skewed.
   * Converted the image into grayscale.
   * Inverted the image pixels value, that is 255 - Image, black became white and vice-versa so has to follow same pixels values that of the MNIST images.
