@@ -17,6 +17,7 @@ We have trained our classification model on MNIST data using Multi-classLogistic
   * Accuracies of the models on the USPS data were way lower than the accuracies they gave for the MNIST dataset. After seeing such performance of all the three training models on the USPS data set which were trained on the MNIST data set we can conclude that our model is not the best in the general way but performs well on the dataset in which it was trained. Our model needs to have the training knowledge of the USPS data in order to perform well on the USPS data set.
 
 ## Approach
+***
 ### Logistic Regression
 * MNIST dataset files were downloaded from the website mentioned in the main.pdf have been read using the gzip library function of the python with the help of direction mentioned in this [website](https://martin-thoma.com/classify-mnist-with-pybrain/).
 * Train and Test Images were then flattened into 2D numpy array, N x 784 size.
@@ -59,8 +60,14 @@ b. In order to do that, we followed below steps:
   * Resized the each image to 28x28
   * Normalized the image pixels with ([value-min]/[max-min]) formula
   * Flattened each image into 1x784 numpy array
+  
+ 
 
 ## Results
+***
+### Logistic Regression
+**Hyperparameters = learning_rate**
+
 <table class="tableizer-table">
 <thead><tr><td colspan=3><b>At epoch count = 200</b></td><td colspan=3><b>MNIST</b></td><td><b>USPS</b></td></tr></thead>
 <thead><tr><th>Sr.</th><th>Learning_Rate</th><th>Regulariser</th><th>Training (%)</th><th>Val (%)</th><th>Test (%)</th><th>Test (%)</th></tr></thead><tbody>
@@ -82,6 +89,79 @@ b. In order to do that, we followed below steps:
  <tr><td>16</td><td>0.14</td><td>0</td><td>91.54</td><td>93.3</td><td>91.56</td><td>45.15</td></tr>
  <tr><td>17</td><td>0.15</td><td>0</td><td>91.62</td><td>93.38</td><td>91.55</td><td>45.32</td></tr>
 </tbody></table>
+
+### Single Hidden Layer Neural Network
+**Hyperparameters = number of units in hidden layer, learning_rate**
+
+<table>
+<thead><tr><td colspan=3><b>With epoch_count = 20000 and batch_size = 50</b></td><td colspan=3><b>MNIST</b></td><td><b>USPS</b></td></tr></thead>
+<thead><tr><th>Sr.</th><th>Number of units in hidden layer</th><th>Learning Rate</th><th>Training (%)</th><th>Val (%)</th><th>Test (%)</th><th>Test (%)</th></tr></thead><tbody>
+ <tr><td>1</td><td>784</td><td>0.01</td><td>99.27</td><td>97.42</td><td>97.35</td><td>63.18</td></tr>
+ <tr><td>2</td><td>784</td><td>0.02</td><td>97.93</td><td>96.58</td><td>96.01</td><td>61.63</td></tr>
+ <tr><td>3</td><td>784</td><td>0.03</td><td>95.08</td><td>94.32</td><td>93.87</td><td>56.88</td></tr>
+ <tr><td>4</td><td>784</td><td>0.04</td><td>93.37</td><td>93.08</td><td>92.4</td><td>54.64</td></tr>
+ <tr><td>5</td><td>784</td><td>0.05</td><td>88.87</td><td>88.42</td><td>88.37</td><td>47.09</td></tr>
+ <tr><td>6</td><td>864</td><td>0.01</td><td>99.33</td><td>97.6</td><td>97.46</td><td>65.25</td></tr>
+ <tr><td>7</td><td>864</td><td>0.02</td><td>97.36</td><td>95.32</td><td>95.77</td><td>59.63</td></tr>
+ <tr><td>8</td><td>864</td><td>0.03</td><td>95.72</td><td>94.82</td><td>94.09</td><td>56.85</td></tr>
+ <tr><td>9</td><td>864</td><td>0.04</td><td>92.08</td><td>91.16</td><td>90.94</td><td>52.24</td></tr>
+ <tr><td>10</td><td>864</td><td>0.05</td><td>91.07</td><td>90.2</td><td>90.46</td><td>49.24</td></tr>
+ <tr><td>11</td><td>944</td><td>0.01</td><td>99.13</td><td>97.74</td><td>97.47</td><td>64.2</td></tr>
+ <tr><td>12</td><td>944</td><td>0.02</td><td>97.9</td><td>96.74</td><td>96.12</td><td>61.74</td></tr>
+ <tr><td>13</td><td>944</td><td>0.03</td><td>95</td><td>94.16</td><td>93.8</td><td>56.89</td></tr>
+ <tr><td>14</td><td>944</td><td>0.04</td><td>92.39</td><td>92.12</td><td>91.07</td><td>50.29</td></tr>
+ <tr><td>15</td><td>944</td><td>0.05</td><td>91.67</td><td>91.3</td><td>91.09</td><td>50.27</td></tr>
+ <tr><td>16</td><td>1024</td><td>0.01</td><td>99.25</td><td>97.52</td><td>97.81</td><td>64.6</td></tr>
+ <tr><td>17</td><td>1024</td><td>0.02</td><td>97.6</td><td>96.2</td><td>95.57</td><td>59.59</td></tr>
+ <tr><td>18</td><td>1024</td><td>0.03</td><td>95.46</td><td>94.2</td><td>94.16</td><td>54.95</td></tr>
+ <tr><td>19</td><td>1024</td><td>0.04</td><td>90.61</td><td>90.38</td><td>89.97</td><td>52.33</td></tr>
+ <tr><td>20</td><td>1024</td><td>0.05</td><td>89.56</td><td>89.08</td><td>88.83</td><td>49.46</td></tr>
+</tbody></table>
+
+<hr/>
+#### Logistic Regression
+Output for Learning rate 0.07
+Current learning rate is 0.070000
+> iteration 0/200: loss 2.303
+> iteration 10/200: loss 0.759
+> iteration 20/200: loss 0.583
+> iteration 30/200: loss 0.509
+> iteration 40/200: loss 0.468
+> iteration 50/200: loss 0.440
+> iteration 60/200: loss 0.421
+> iteration 70/200: loss 0.406
+> iteration 80/200: loss 0.394
+> iteration 90/200: loss 0.384
+> iteration 100/200: loss 0.376
+> iteration 110/200: loss 0.369
+> iteration 120/200: loss 0.362
+> iteration 130/200: loss 0.357
+> iteration 140/200: loss 0.352
+> iteration 150/200: loss 0.348
+> iteration 160/200: loss 0.344
+> iteration 170/200: loss 0.341
+> iteration 180/200: loss 0.338
+> iteration 190/200: loss 0.335
+training set Accuracy is 0.907055
+validation set Accuracy is 0.927000
+Test set Accuracy is 0.908800
+USPS set Accuracy is 0.439422
+
+#### Logistic Regression (using TensorFlow):
+Output for learning rate 0.5, number of epochs: 10000
+> The accuracy on MNIST test set: 92.41
+> The accuracy on USPS test set: 48.32
+
+#### Single Hidden Layer Neural Network:
+Output for learning rate 0.01, number of epochs: 20000, number of units in hidden layer: 784
+> MNIST validation accuracy: 97.42
+> MNIST test accuracy: 97.35
+> The accuracy on USPS test set: 63.18
+
+#### Convolutional Neural Network:
+Output for learning rate 1e-4, number of epochs: 20000
+> MNIST test accuracy: 99.18
+> The accuracy on USPS test set: 75.13
 
 ## Documentation
 ***
