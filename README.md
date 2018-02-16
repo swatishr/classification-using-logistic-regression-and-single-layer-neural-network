@@ -142,11 +142,11 @@ iteration 160/200: loss 0.344 </br>
 iteration 170/200: loss 0.341 </br>
 iteration 180/200: loss 0.338 </br>
 iteration 190/200: loss 0.335 </br>
-</blockquote>
 training set Accuracy is 0.907055 </br>
 validation set Accuracy is 0.927000 </br>
 Test set Accuracy is 0.908800 </br>
 USPS set Accuracy is 0.439422
+</blockquote>
 
 #### Logistic Regression (using TensorFlow):
 Output for learning rate 0.5, number of epochs: 10000
@@ -181,6 +181,46 @@ Report and documentation can be found on this [Documentation](https://github.com
 * [**Materials**](https://github.com/swatishr/classification-using-logistic-regression-and-single-layer-neural-network/tree/master/Materials) contains the project related informative materials
 * [**Bonus**](https://github.com/swatishr/classification-using-logistic-regression-and-single-layer-neural-network/tree/master/Bonus) contains source code of our machine learning algorithm using back-propogation.
 * [**proj3_images**](https://github.com/swatishr/classification-using-logistic-regression-and-single-layer-neural-network/tree/master/proj3_imagest) contains image data for training, validation and testing
+
+### Code outline
+#### code:
+* **logistic_main.py:** Run this file for execution of logistic regression model without using tensorflow
+* **logistic_tensorflow_main.py:** Run this file for execution of logistic regression model using tensorflow. It creates the model, trains it, tests it on MNIST validation, test set and USPS test set
+* **single_layer_NN_main.py:** Run this file for execution of single hidden layer NN model using tensorflow. It creates the model, trains it, tests it on MNIST validation, test set and USPS test set
+* **cnn_main2.py:** Run this file for execution of CNN model using tensorflow. It creates the model, trains it, tests it on MNIST validation, test set and USPS test set
+* **libs.py:**
+  * **read_gz(images,labels):** To read MNIST gz data
+  * **view_image(image, label=""):** to view single image from the MNSIT data
+  * **yDash(trains_images, W):** for performing the W.dot(X)
+  * **softmax(x):** for calculating the softmax of each row in W.dot(X)
+  * **sgd(W, train_images, T, L2_lambda, epochNo, learning_rate):** gradient descend for optimising the weights
+  * **cross_entropy(W, X, T, L2_lambda):** cacluating the loss in the model
+  * **predict(W, X):** predicting the labels from the output of the model
+* **single_layer_NN_lib.py:**
+  * **create_single_hidden_layer_nn(number_hidden_units): create input layer,
+one hidden layer with specified number of neurons and output layer
+* **cnn_lib.py:**
+  * **weight_init(shape):** Initialize weight variables
+  * **bias_init(shape): Initialize bias variables
+  * **convolution(x, W): convolves input with given weights and stride 1 and with zero padding
+  * **maxpool(x): performs max pooling on window size of 2x2 and stride of 2 with zero padding
+* **USPS_data_extraction.py:**
+  * **make_square(im):** To make the image with equal height and width
+  * **extract_usps_data():** Get USPS test images and labels. Usps_test_images is a Nx784 numpy array and Usps_test_labels is Nx10 numpy array (one-hot representation)
+  
+#### Bonus:This zip folder consists of implementation of Single Hidden Layer NN model using backpropagation
+* **main.py:** Run this file for execution of single hidden layer NN model using back propogation. It creates the model, trains it, tests it on MNIST validation, test set and USPS test set
+* **SNlibs.py:**
+  * **read_gz(images,labels):** To read MNIST gz data
+  * **view_image(image, label=""):** to view single image from the MNSIT data
+  * **softmax(x):** for calculating the softmax of each row in W.dot(X)
+  * **calculate_loss(model, X,y, reg_lambda):** Helper function to evaluate the total loss on the dataset 
+  * **cross_entropy(W, X, T, L2_lambda):** cacluating the loss in the model
+  * **predict(W, X):** predicting the labels from the output of the model
+  * **build_model(nn_hdim, num_passes, X, y, reg_lambda, learning_rate, T):** This function learns parameters for the neural network and returns the model
+* **USPS_data_extraction.py:**
+  * **make_square(im):** To make the image with equal height and width
+  * **extract_usps_data():** Get USPS test images and labels. Usps_test_images is a Nx784 numpy array and Usps_test_labels is Nx10 numpy array (one-hot representation)
 
 ## Contributors
 ***
