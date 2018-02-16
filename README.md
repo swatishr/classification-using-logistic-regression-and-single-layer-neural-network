@@ -118,50 +118,57 @@ b. In order to do that, we followed below steps:
  <tr><td>20</td><td>1024</td><td>0.05</td><td>89.56</td><td>89.08</td><td>88.83</td><td>49.46</td></tr>
 </tbody></table>
 
-<hr/>
 #### Logistic Regression
 Output for Learning rate 0.07
 Current learning rate is 0.070000
-> iteration 0/200: loss 2.303
-> iteration 10/200: loss 0.759
-> iteration 20/200: loss 0.583
-> iteration 30/200: loss 0.509
-> iteration 40/200: loss 0.468
-> iteration 50/200: loss 0.440
-> iteration 60/200: loss 0.421
-> iteration 70/200: loss 0.406
-> iteration 80/200: loss 0.394
-> iteration 90/200: loss 0.384
-> iteration 100/200: loss 0.376
-> iteration 110/200: loss 0.369
-> iteration 120/200: loss 0.362
-> iteration 130/200: loss 0.357
-> iteration 140/200: loss 0.352
-> iteration 150/200: loss 0.348
-> iteration 160/200: loss 0.344
-> iteration 170/200: loss 0.341
-> iteration 180/200: loss 0.338
-> iteration 190/200: loss 0.335
-training set Accuracy is 0.907055
-validation set Accuracy is 0.927000
-Test set Accuracy is 0.908800
+<blockquote>
+iteration 0/200: loss 2.303 </br>
+iteration 10/200: loss 0.759 </br>
+iteration 20/200: loss 0.583 </br>
+iteration 30/200: loss 0.509 </br>
+iteration 40/200: loss 0.468 </br>
+iteration 50/200: loss 0.440 </br>
+iteration 60/200: loss 0.421 </br>
+iteration 70/200: loss 0.406 </br>
+iteration 80/200: loss 0.394 </br>
+iteration 90/200: loss 0.384 </br>
+iteration 100/200: loss 0.376 </br>
+iteration 110/200: loss 0.369 </br>
+iteration 120/200: loss 0.362 </br>
+iteration 130/200: loss 0.357 </br>
+iteration 140/200: loss 0.352 </br>
+iteration 150/200: loss 0.348 </br>
+iteration 160/200: loss 0.344 </br>
+iteration 170/200: loss 0.341 </br>
+iteration 180/200: loss 0.338 </br>
+iteration 190/200: loss 0.335 </br>
+</blockquote>
+training set Accuracy is 0.907055 </br>
+validation set Accuracy is 0.927000 </br>
+Test set Accuracy is 0.908800 </br>
 USPS set Accuracy is 0.439422
 
 #### Logistic Regression (using TensorFlow):
 Output for learning rate 0.5, number of epochs: 10000
-> The accuracy on MNIST test set: 92.41
-> The accuracy on USPS test set: 48.32
+<blockquote>
+The accuracy on MNIST test set: 92.41 </br>
+The accuracy on USPS test set: 48.32 </br>
+</blockquote>
 
 #### Single Hidden Layer Neural Network:
 Output for learning rate 0.01, number of epochs: 20000, number of units in hidden layer: 784
-> MNIST validation accuracy: 97.42
-> MNIST test accuracy: 97.35
-> The accuracy on USPS test set: 63.18
+<blockquote>
+MNIST validation accuracy: 97.42 </br>
+MNIST test accuracy: 97.35 </br>
+The accuracy on USPS test set: 63.18 </br>
+</blockquote>
 
 #### Convolutional Neural Network:
 Output for learning rate 1e-4, number of epochs: 20000
-> MNIST test accuracy: 99.18
-> The accuracy on USPS test set: 75.13
+<blockquote>
+MNIST test accuracy: 99.18 </br>
+The accuracy on USPS test set: 75.13 </br>
+</blockquote>
 
 ## Documentation
 ***
