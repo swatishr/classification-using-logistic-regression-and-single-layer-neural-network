@@ -71,7 +71,7 @@ try:#training data
 	data = np.load("model.npz")
 	model = data['model']
 except FileNotFoundError:#read from mnist file if presaved data not found
-	model = build_model(50, 2500, trains_images, train_images_label, 0.05, 0.05, train_images_label_target_mat)
+	model = build_model(3, 2000, trains_images, train_images_label, 0.05, 0.05, train_images_label_target_mat)
 	np.savez("model.npz", model=model)
  
 yDashTrain = predict(model, trains_images)
