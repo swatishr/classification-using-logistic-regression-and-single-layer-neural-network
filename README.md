@@ -243,7 +243,7 @@ one hidden layer with specified number of neurons and output layer
   * Python, Numpy and TensorFlow documentations
   * [https://cs231n.github.io/convolutional-networks/](https://cs231n.github.io/convolutional-networks/)
   * [http://yann.lecun.com/exdb/mnist/](http://yann.lecun.com/exdb/mnist/)
-  * [https://martin-thoma.com/classify-mnist-with-pybrain/]/(https://martin-thoma.com/classify-mnist-with-pybrain/)
+  * [https://martin-thoma.com/classify-mnist-with-pybrain/](https://martin-thoma.com/classify-mnist-with-pybrain/)
 
 ## License
 ***
